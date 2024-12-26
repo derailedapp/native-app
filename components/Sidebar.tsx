@@ -16,16 +16,19 @@
 
 // S: threads
 
+import { Link, useRouter } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 
 export default function Sidebar() {
+    const router = useRouter();
+
     return (
-        <View className="flex flex-row gap-3 p-3">
-            <Pressable>
+        <View className="flex flex-col gap-3 p-3">
+            <Link href="/global">
                 <Text className="">
                     Home
                 </Text>
-            </Pressable>
+            </Link>
             <Pressable>
                 <Text>
                     Myself

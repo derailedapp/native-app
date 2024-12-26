@@ -46,3 +46,71 @@ export const userLogin = async (email: string, password: string) => {
     const data = await resp.json();
     return [data.token, data.user];
 }
+
+export const scrollExc = async (exclude: string[]): Promise<Post[]> => {
+    const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/posts/scroll");
+    if (exclude.length > 0) {
+        const params = new URLSearchParams();
+        var ex = exclude.join("&");
+        if (exclude.length === 1) {
+            ex += "&";
+        }
+        params.append("exclude", ex);
+        url.search = params.toString();
+    }
+
+    const resp = await fetch(url, {
+        method: "GET",
+    });
+
+    return await resp.json();
+}
+
+export const getProfile = async (user_id: string): Promise<Profile> => {
+    const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/users/" + user_id);
+    const resp = await fetch(url, {
+        method: "GET",
+    });
+
+    return await resp.json();
+}
+
+export const getCurrentProfile = async (): Promise<Profile> => {
+    const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/users/@me");
+    const resp = await fetch(url, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+            "Authorization": localStorage.getItem("token")!
+        }
+    });
+
+    return await resp.json();
+}
+
+export interface Actor {
+    id: string,
+    handle: string | null,
+    display_name: string | null,
+    bio: string | null,
+    status: string | null,
+    public_key: string
+}
+
+export interface Post {
+    id: string,
+    type: number,
+    author_id: string | null,
+    content: string,
+    original_ts: number,
+    indexed_ts: number,
+    parent_id: string | null,
+    signature: string
+}
+
+export interface Profile {
+    actor: Actor,
+    followed: number,
+    following: number,
+    posts: number
+}

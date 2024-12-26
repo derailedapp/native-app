@@ -20,7 +20,6 @@ import { Controller, useForm } from "react-hook-form";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { createUser } from "@/lib/api";
-import State from "@/lib/state";
 import { useLinkProps } from "@react-navigation/native";
 
 export default function Register() {
@@ -39,9 +38,8 @@ export default function Register() {
   const router = useRouter();
 
   const onSubmit = async (data: { password: string; username: string; email: string }) => {
-    const [token, user] = await createUser(data.email, data.username, data.password);
+    const [token, _] = await createUser(data.email, data.username, data.password);
     await AsyncStorage.setItem("token", token);
-    State.setUser(user);
     router.push("/global");
   };
 
