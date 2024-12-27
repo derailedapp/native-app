@@ -16,24 +16,29 @@
 
 // S: threads
 
-import { Link, useRouter } from "expo-router";
-import { Pressable, Text, View } from "react-native";
+import { Link } from "expo-router";
+import { Text, View } from "react-native";
+import Octicons from "@expo/vector-icons/Octicons"
 
 export default function Sidebar() {
-    const router = useRouter();
-
     return (
-        <View className="flex flex-col gap-3 p-3">
+        <View className="hidden lg:flex flex-col justify-start gap-4 p-3 pr-10">
             <Link href="/global">
-                <Text className="">
-                    Home
-                </Text>
+                <View className="flex flex-row items-center p-4 gap-3 hover:bg-quite-lighter-dark-blue min-w-32 rounded-xl">
+                    <Octicons name="home" size={24} color="white" />
+                    <Text className="text-white font-main text-xl">
+                        Home
+                    </Text>
+                </View>
             </Link>
-            <Pressable>
-                <Text>
-                    Myself
-                </Text>
-            </Pressable>
+            <Link href="/users/@me">
+                <View className="flex flex-row items-center p-4 gap-3 hover:bg-quite-lighter-dark-blue min-w-32 rounded-xl">
+                    <Octicons name="feed-person" size={24} color="white" />
+                    <Text className="text-white font-main text-xl">
+                        Profile
+                    </Text>
+                </View>
+            </Link>
         </View>
     )
 }

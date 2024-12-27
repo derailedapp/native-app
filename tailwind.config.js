@@ -11,7 +11,9 @@ module.exports = {
         },
         colors: {
             brand: "rgb(115 100 255)",
-            "not-quite-dark-blue": "rgb(10 22 40)",
+            borders: "rgb(118, 171, 174)",
+            "not-quite-dark-blue": "rgb(22, 23, 33)",
+            "quite-lighter-dark-blue": "rgb(27, 28, 41)"
         },
       },
     },
