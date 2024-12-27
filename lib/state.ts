@@ -17,5 +17,5 @@
 import { MMKV } from "react-native-mmkv"
 
 export const tokenStorage = new MMKV({
-    id: "bevy-token-storage",
+    id: "derailed-token-storage",
 })
