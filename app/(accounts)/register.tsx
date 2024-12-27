@@ -21,6 +21,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { createUser } from "@/lib/api";
 import { useLinkProps } from "@react-navigation/native";
+import { tokenStorage } from "@/lib/state";
 
 export default function Register() {
   const {
@@ -39,7 +40,7 @@ export default function Register() {
 
   const onSubmit = async (data: { password: string; username: string; email: string }) => {
     const [token, _] = await createUser(data.email, data.username, data.password);
-    await AsyncStorage.setItem("token", token);
+    tokenStorage.set("token", token);
     router.push("/global");
   };
 

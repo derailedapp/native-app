@@ -14,3 +14,8 @@
    limitations under the License.
 */
 
+import { MMKV } from "react-native-mmkv"
+
+export const tokenStorage = new MMKV({
+    id: "bevy-token-storage",
+})

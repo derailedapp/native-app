@@ -20,6 +20,7 @@ import { Controller, useForm } from "react-hook-form";
 import { userLogin } from "@/lib/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import { tokenStorage } from "@/lib/state";
 
 export default function Login() {
   const {
@@ -38,7 +39,7 @@ export default function Login() {
   const onSubmit = async (data: { password: string; email: string }) => {
     const [token, _] = await userLogin(data.email, data.password);
 
-    await AsyncStorage.setItem("token", token);
+    tokenStorage.set("token", token);
 
     router.push("/global");
   };

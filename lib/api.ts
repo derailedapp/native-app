@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+import { tokenStorage } from "./state";
+
 export const createUser = async (email: string, username: string, password: string) => {
     const resp = await fetch(process.env.EXPO_PUBLIC_API_URL + "/users/register", {
         method: "POST",
@@ -81,7 +83,7 @@ export const getCurrentProfile = async (): Promise<Profile> => {
         method: "GET",
         mode: "cors",
         headers: {
-            "Authorization": localStorage.getItem("token")!
+            "Authorization": tokenStorage.getString("token")!
         }
     });
 

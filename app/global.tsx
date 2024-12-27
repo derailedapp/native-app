@@ -19,6 +19,7 @@ import Sidebar from "../components/Sidebar";
 import { getCurrentProfile, getProfile, Post, Profile, scrollExc } from "@/lib/api";
 import PostList from "@/components/PostList";
 import { View } from "react-native";
+import { tokenStorage } from "@/lib/state";
 
 export default function GlobalFeed() {
     const [posts, setPosts] = useState<Post[]>([
@@ -60,15 +61,15 @@ export default function GlobalFeed() {
             setProfiles(scrollProfiles);
             setPosts(scrollPosts);
         });
-        if (localStorage.getItem("token") !== null) {
+        if (tokenStorage.contains("token")) {
             getCurrentProfile().then((profile) => {
                 setCurrentProfile(profile);
-            }).catch(() => localStorage.removeItem("token"));
+            }).catch(() => tokenStorage.delete("token"));
         }
     }, []);
 
     return (
-        <View className="flex flex-row justify-center items-center w-full">
+        <View className="flex flex-row justify-center items-center w-full m-auto">
             <Sidebar />
             <PostList posts={posts} profiles={profiles} />
         </View>
