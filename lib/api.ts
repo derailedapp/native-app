@@ -90,6 +90,20 @@ export const getCurrentProfile = async (): Promise<Profile> => {
     return await resp.json();
 }
 
+export const createPost = async (): Promise<Post> => {
+    const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/posts");
+    const resp = await fetch(url, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+            "Authorization": tokenStorage.getString("token")!,
+            "Content-Type": "application/json"
+        }
+    });
+
+    return await resp.json();
+}
+
 export interface Actor {
     id: string,
     handle: string | null,

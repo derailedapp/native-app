@@ -20,14 +20,11 @@ import { Link, useRouter } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 import sanitize from "sanitize-html";
 import moment from "moment";
-import PostInput from "./PostInput";
 
 export default function PostList({ posts, profiles }: { posts: Post[], profiles: Profile[] }) {
-    const router = useRouter();
-
     // TODO: markdown formatting
     return (
-        <View className="lg:min-w-[48rem] border-l border-r border-borders min-h-screen min-w-full">
+        <View className="lg:min-w-[48rem] max-w-[48rem] border-l border-r border-borders min-h-screen min-w-full">
             <FlashList
                 data={posts}
                 className="flex flex-row"
@@ -43,7 +40,7 @@ export default function PostList({ posts, profiles }: { posts: Post[], profiles:
                         date = moment.unix(item.indexed_ts).calendar();
                     }
                     return (
-                        <View id={item.id} className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 hover:bg-quite-lighter-dark-blue p-5 border-b border-t border-borders">
+                        <View id={item.id} className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 hover:bg-quite-lighter-dark-blue p-5 border-b border-t border-white">
                             <View className="flex flex-row place-items-start items-center gap-1 pb-4">
                                 <Link href={`/!${item.id}`}>
                                     <Text className="text-white font-main font-semibold">
@@ -66,7 +63,7 @@ export default function PostList({ posts, profiles }: { posts: Post[], profiles:
                                 </Text>
                             </View>
                             <View>
-                                <Text className="text-white font-main font-light max-w-sm md:max-w-xl lg:max-w-2xl text-wrap">{sanitize(item.content)}</Text>
+                                <Text className="text-white font-main font-medium max-w-sm md:max-w-xl lg:max-w-2xl text-wrap">{sanitize(item.content)}</Text>
                             </View>
                         </View>
                     )

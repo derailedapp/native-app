@@ -20,7 +20,7 @@ import { getCurrentProfile, getProfile, Post, Profile, scrollExc } from "@/lib/a
 import PostList from "@/components/PostList";
 import { View } from "react-native";
 import { tokenStorage } from "@/lib/state";
-import PostInput from "@/components/PostInput";
+import LogoHead from "@/components/LogoHead";
 
 export default function GlobalFeed() {
     const [posts, setPosts] = useState<Post[]>([
@@ -70,11 +70,12 @@ export default function GlobalFeed() {
         }
     }, []);
 
+
     return (
-        <View className="flex flex-row items-center justify-center min-w-full m-auto bg-not-quite-dark-blue gap-4">
+        <View className={"flex flex-row justify-center min-w-full m-auto bg-not-quite-dark-blue gap-4"}>
             <Sidebar />
-            <View className="flex border-l border-r border-white">
-                <PostInput />
+            <View className="border-l border-r border-white">
+                <LogoHead />
                 <PostList posts={posts} profiles={profiles} />
             </View>
         </View>

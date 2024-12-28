@@ -14,16 +14,13 @@
    limitations under the License.
 */
 
-import { Stack } from 'expo-router';
-import { Text, View } from 'react-native';
+import { useRouter } from "expo-router";
+import { Image, Pressable, View } from "react-native";
 
-export default function UserProcess() {
-  return (
-    <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
-      <View>
-        <Text>Not Found!</Text>
-      </View>
-    </>
-  );
+export default function LogoHead() {
+    return (
+        <View className="bg-not-quite-dark-blue flex items-center justify-center p-4">
+            <Image className="max-h-[37.3px] max-w-[42.8px]" source={require("../assets/images/blub_icon_brand_RGB.svg")} />
+        </View>
+    )
 }

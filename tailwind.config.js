@@ -6,14 +6,14 @@ module.exports = {
     theme: {
       extend: {
         fontFamily: {
-            main: "'JetBrains Mono'",
-            header: '"IBM Plex Mono", sans-serif'
+            main: "'MonaSans'",
+            code: "'MonaspaceNeon'"
         },
         colors: {
             brand: "rgb(115 100 255)",
             borders: "rgb(118, 171, 174)",
-            "not-quite-dark-blue": "rgb(22, 23, 33)",
-            "quite-lighter-dark-blue": "rgb(27, 28, 41)"
+            "not-quite-dark-blue": "rgb(13, 17, 23)",
+            "quite-lighter-dark-blue": "rgb(21, 27, 35)"
         },
       },
     },

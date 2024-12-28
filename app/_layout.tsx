@@ -26,8 +26,9 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
-    JetBrainsMono: require('../assets/fonts/JetBrainsMono.ttf'),
-    IBMPlexMono: require('../assets/fonts/IBMPlexMono-Bold.ttf')
+    MonaSans: require("../assets/fonts/MonaSans-Variable.ttf"),
+    MonaSansItalic: require("../assets/fonts/MonaSans-Italic-Variable.ttf"),
+    MonaspaceNeon: require("../assets/fonts/MonaspaceNeon-Variable.ttf")
   });
 
   useEffect(() => {
@@ -41,6 +42,21 @@ export default function RootLayout() {
   }
 
   return (
-    <Slot />
+    <Stack>
+      <Stack.Screen
+        name="global"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="post"
+        options={{
+          presentation: 'transparentModal',
+          animation: "fade",
+          headerShown: false,
+        }}
+      />
+    </Stack>
   );
 }
