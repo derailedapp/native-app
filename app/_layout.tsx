@@ -14,12 +14,12 @@
    limitations under the License.
 */
 
-import { useFonts } from 'expo-font';
-import { Slot, Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-import './global.css'
+import { useFonts } from "expo-font";
+import { Slot, Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
+import "react-native-reanimated";
+import "./global.css";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -28,7 +28,7 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     MonaSans: require("../assets/fonts/MonaSans-Variable.ttf"),
     MonaSansItalic: require("../assets/fonts/MonaSans-Italic-Variable.ttf"),
-    MonaspaceNeon: require("../assets/fonts/MonaspaceNeon-Variable.ttf")
+    MonaspaceNeon: require("../assets/fonts/MonaspaceNeon-Variable.ttf"),
   });
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export default function RootLayout() {
       <Stack.Screen
         name="post"
         options={{
-          presentation: 'transparentModal',
+          presentation: "transparentModal",
           animation: "fade",
           headerShown: false,
         }}

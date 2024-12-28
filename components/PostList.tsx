@@ -19,15 +19,21 @@ import { FlashList } from "@shopify/flash-list";
 import { View } from "react-native";
 import PostComp from "./Post";
 
-export default function PostList({ posts, profiles }: { posts: Post[], profiles: Profile[] }) {
-    // TODO: markdown formatting
-    return (
-        <View className="lg:min-w-[48rem] max-w-[48rem] border-l border-r border-borders min-h-screen min-w-full">
-            <FlashList
-                data={posts}
-                className="flex flex-row"
-                renderItem={({ item }) => <PostComp item={item} profiles={profiles} />}
-            />
-        </View>
-    )
+export default function PostList({
+  posts,
+  profiles,
+}: {
+  posts: Post[];
+  profiles: Profile[];
+}) {
+  // TODO: markdown formatting
+  return (
+    <View className="lg:min-w-[48rem] max-w-[48rem] border-l border-r border-borders min-h-screen min-w-full">
+      <FlashList
+        data={posts}
+        className="flex flex-row"
+        renderItem={({ item }) => <PostComp item={item} profiles={profiles} />}
+      />
+    </View>
+  );
 }

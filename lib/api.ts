@@ -16,121 +16,132 @@
 
 import { tokenStorage } from "./state";
 
-export const createUser = async (email: string, username: string, password: string) => {
-    const resp = await fetch(process.env.EXPO_PUBLIC_API_URL + "/users/register", {
-        method: "POST",
-        body: JSON.stringify({
-            email,
-            username,
-            password
-        }),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    });
+export const createUser = async (
+  email: string,
+  username: string,
+  password: string,
+) => {
+  const resp = await fetch(
+    process.env.EXPO_PUBLIC_API_URL + "/users/register",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        username,
+        password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );
 
-    const data = await resp.json();
-    return [data.token, data.user];
-}
+  const data = await resp.json();
+  return [data.token, data.user];
+};
 
 export const userLogin = async (email: string, password: string) => {
-    const resp = await fetch(process.env.EXPO_PUBLIC_API_URL + "/users/login", {
-        method: "POST",
-        body: JSON.stringify({
-            email,
-            password
-        }),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    });
+  const resp = await fetch(process.env.EXPO_PUBLIC_API_URL + "/users/login", {
+    method: "POST",
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-    const data = await resp.json();
-    return [data.token, data.user];
-}
+  const data = await resp.json();
+  return [data.token, data.user];
+};
 
-export const scrollGlobal = async (beforeTs: number | undefined = undefined): Promise<Post[]> => {
-    const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/posts/scroll");
+export const scrollGlobal = async (
+  beforeTs: number | undefined = undefined,
+): Promise<Post[]> => {
+  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/posts/scroll");
 
-    if (beforeTs !== undefined) {
-        url.searchParams.set("before_ts", beforeTs.toString());
-    }
+  if (beforeTs !== undefined) {
+    url.searchParams.set("before_ts", beforeTs.toString());
+  }
 
-    const resp = await fetch(url, {
-        method: "GET",
-    });
+  const resp = await fetch(url, {
+    method: "GET",
+  });
 
-    return await resp.json();
-}
+  return await resp.json();
+};
 
 export const getProfile = async (user_id: string): Promise<Profile> => {
-    const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/users/" + user_id);
-    const resp = await fetch(url, {
-        method: "GET",
-    });
+  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/users/" + user_id);
+  const resp = await fetch(url, {
+    method: "GET",
+  });
 
-    return await resp.json();
-}
+  return await resp.json();
+};
 
 export const getUserPosts = async (user_id: string): Promise<Post[]> => {
-    const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/users/" + user_id + "/posts");
-    const resp = await fetch(url, {
-        method: "GET",
-    });
+  const url = new URL(
+    process.env.EXPO_PUBLIC_API_URL + "/users/" + user_id + "/posts",
+  );
+  const resp = await fetch(url, {
+    method: "GET",
+  });
 
-    return await resp.json();
-}
+  return await resp.json();
+};
 
 export const getCurrentProfile = async (): Promise<Profile> => {
-    const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/users/@me");
-    const resp = await fetch(url, {
-        method: "GET",
-        mode: "cors",
-        headers: {
-            "Authorization": tokenStorage.getString("token")!
-        }
-    });
+  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/users/@me");
+  const resp = await fetch(url, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      Authorization: tokenStorage.getString("token")!,
+    },
+  });
 
-    return await resp.json();
-}
+  return await resp.json();
+};
 
 export const createPost = async (): Promise<Post> => {
-    const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/posts");
-    const resp = await fetch(url, {
-        method: "POST",
-        mode: "cors",
-        headers: {
-            "Authorization": tokenStorage.getString("token")!,
-            "Content-Type": "application/json"
-        }
-    });
+  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/posts");
+  const resp = await fetch(url, {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      Authorization: tokenStorage.getString("token")!,
+      "Content-Type": "application/json",
+    },
+  });
 
-    return await resp.json();
-}
+  return await resp.json();
+};
 
 export interface Actor {
-    id: string,
-    handle: string | null,
-    display_name: string | null,
-    bio: string | null,
-    status: string | null,
-    public_key: string
+  id: string;
+  handle: string | null;
+  display_name: string | null;
+  bio: string | null;
+  status: string | null;
+  public_key: string;
 }
 
 export interface Post {
-    id: string,
-    type: number,
-    author_id: string | null,
-    content: string,
-    original_ts: number,
-    indexed_ts: number,
-    parent_id: string | null,
-    signature: string
+  id: string;
+  type: number;
+  author_id: string | null;
+  content: string;
+  original_ts: number;
+  indexed_ts: number;
+  parent_id: string | null;
+  signature: string;
 }
 
 export interface Profile {
-    actor: Actor,
-    followed: number,
-    following: number,
-    posts: number
+  actor: Actor;
+  followed: number;
+  following: number;
+  posts: number;
 }

@@ -14,8 +14,8 @@
    limitations under the License.
 */
 
-import { MMKV } from "react-native-mmkv"
+import { MMKV } from "react-native-mmkv";
 
 export const tokenStorage = new MMKV({
-    id: "derailed-token-storage",
-})
+  id: "derailed-token-storage",
+});

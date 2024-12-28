@@ -14,13 +14,13 @@
    limitations under the License.
 */
 
-import { Stack } from 'expo-router';
-import { Text, View } from 'react-native';
+import { Stack } from "expo-router";
+import { Text, View } from "react-native";
 
 export default function NotFoundScreen() {
   return (
     <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
+      <Stack.Screen options={{ title: "Oops!" }} />
       <View>
         <Text>Not Found!</Text>
       </View>

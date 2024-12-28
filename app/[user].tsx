@@ -16,7 +16,13 @@
 
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
-import { getCurrentProfile, getProfile, getUserPosts, Post, Profile } from "@/lib/api";
+import {
+  getCurrentProfile,
+  getProfile,
+  getUserPosts,
+  Post,
+  Profile,
+} from "@/lib/api";
 import PostList from "@/components/PostList";
 import { View } from "react-native";
 import { tokenStorage } from "@/lib/state";
@@ -53,50 +59,61 @@ export default function UserProfile() {
   const [found, setFound] = useState(true);
 
   useEffect(() => {
-      if (tokenStorage.contains("token")) {
-          getCurrentProfile().then((profile) => {
-              setCurrentProfile(profile);
-          }).catch(() => tokenStorage.delete("token"));
-      }
-      if (isMe) {
-        if (!currentProfile) {
-          router.push("..");
-        } else {
-          setThisProfile(currentProfile!);
-        }
+    if (tokenStorage.contains("token")) {
+      getCurrentProfile()
+        .then((profile) => {
+          setCurrentProfile(profile);
+        })
+        .catch(() => tokenStorage.delete("token"));
+    }
+    if (isMe) {
+      if (!currentProfile) {
+        router.push("..");
       } else {
-        getProfile(user.replace("!", "")).then((profile) => {
-          setThisProfile(profile);
-        });
+        setThisProfile(currentProfile!);
       }
-      if (!thisProfile) {
-        setFound(false);
-        return;
-      }
-
-      getUserPosts(thisProfile!.actor.id).then((scrollPosts) => {
-        const scrollProfiles: Profile[] = [thisProfile!];
-
-        scrollPosts.forEach(p => {
-            if (!profiles.find((profile) => profile.actor.id === p.author_id) && p.author_id !== null) {
-                getProfile(p.author_id!).then((profile) => scrollProfiles.push(profile))
-            }
-        });
-        setProfiles(scrollProfiles);
-        setPosts(scrollPosts);
+    } else {
+      getProfile(user.replace("!", "")).then((profile) => {
+        setThisProfile(profile);
       });
+    }
+    if (!thisProfile) {
+      setFound(false);
+      return;
+    }
+
+    getUserPosts(thisProfile!.actor.id).then((scrollPosts) => {
+      const scrollProfiles: Profile[] = [thisProfile!];
+
+      scrollPosts.forEach((p) => {
+        if (
+          !profiles.find((profile) => profile.actor.id === p.author_id) &&
+          p.author_id !== null
+        ) {
+          getProfile(p.author_id!).then((profile) =>
+            scrollProfiles.push(profile),
+          );
+        }
+      });
+      setProfiles(scrollProfiles);
+      setPosts(scrollPosts);
+    });
   }, []);
 
-  return (
-      (found ? (<View className={"flex flex-row justify-center min-w-full m-auto bg-not-quite-dark-blue gap-4"}>
-          <Sidebar />
-          <View className="border-l border-r border-white">
-              <LogoHead />
-              <ProfileDisplay profile={thisProfile} />
-              <PostList posts={posts} profiles={profiles} />
-          </View>
-      </View>) : (
-        <NotFoundScreen />
-      ))
-  )
+  return found ? (
+    <View
+      className={
+        "flex flex-row justify-center min-w-full m-auto bg-not-quite-dark-blue gap-4"
+      }
+    >
+      <Sidebar />
+      <View className="border-l border-r border-white">
+        <LogoHead />
+        <ProfileDisplay profile={thisProfile} />
+        <PostList posts={posts} profiles={profiles} />
+      </View>
+    </View>
+  ) : (
+    <NotFoundScreen />
+  );
 }

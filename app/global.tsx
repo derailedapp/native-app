@@ -16,43 +16,60 @@
 
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
-import { getCurrentProfile, getProfile, Post, Profile, scrollGlobal } from "@/lib/api";
+import {
+  getCurrentProfile,
+  getProfile,
+  Post,
+  Profile,
+  scrollGlobal,
+} from "@/lib/api";
 import PostList from "@/components/PostList";
 import { View } from "react-native";
 import { tokenStorage } from "@/lib/state";
 import LogoHead from "@/components/LogoHead";
 
 export default function GlobalFeed() {
-    const [posts, setPosts] = useState<Post[]>([]);
-    const [profiles, setProfiles] = useState<Profile[]>([]);
-    const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
 
-    useEffect(() => {
-        scrollGlobal().then((scrollPosts) => {
-            const scrollProfiles = [...profiles];
+  useEffect(() => {
+    scrollGlobal().then((scrollPosts) => {
+      const scrollProfiles = [...profiles];
 
-            scrollPosts.forEach(p => {
-                if (!profiles.find((profile) => profile.actor.id === p.author_id) && p.author_id !== null) {
-                    getProfile(p.author_id!).then((profile) => scrollProfiles.push(profile))
-                }
-            });
-            setProfiles(scrollProfiles);
-            setPosts(scrollPosts);
-        });
-        if (tokenStorage.contains("token")) {
-            getCurrentProfile().then((profile) => {
-                setCurrentProfile(profile);
-            }).catch(() => tokenStorage.delete("token"));
+      scrollPosts.forEach((p) => {
+        if (
+          !profiles.find((profile) => profile.actor.id === p.author_id) &&
+          p.author_id !== null
+        ) {
+          getProfile(p.author_id!).then((profile) =>
+            scrollProfiles.push(profile),
+          );
         }
-    }, []);
+      });
+      setProfiles(scrollProfiles);
+      setPosts(scrollPosts);
+    });
+    if (tokenStorage.contains("token")) {
+      getCurrentProfile()
+        .then((profile) => {
+          setCurrentProfile(profile);
+        })
+        .catch(() => tokenStorage.delete("token"));
+    }
+  }, []);
 
-    return (
-        <View className={"flex flex-row justify-center min-w-full m-auto bg-not-quite-dark-blue gap-4"}>
-            <Sidebar />
-            <View className="border-l border-r border-white">
-                <LogoHead />
-                <PostList posts={posts} profiles={profiles} />
-            </View>
-        </View>
-    )
+  return (
+    <View
+      className={
+        "flex flex-row justify-center min-w-full m-auto bg-not-quite-dark-blue gap-4"
+      }
+    >
+      <Sidebar />
+      <View className="border-l border-r border-white">
+        <LogoHead />
+        <PostList posts={posts} profiles={profiles} />
+      </View>
+    </View>
+  );
 }

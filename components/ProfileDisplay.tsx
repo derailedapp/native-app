@@ -17,16 +17,16 @@
 import { Profile } from "@/lib/api";
 import { Text, View } from "react-native";
 
-export default function ProfileDisplay({ profile }: { profile: Profile | null }) {
-    return (
-        (profile ? (
-            <View className="flex justify-center items-center p-5 bg-not-quite-dark-blue"></View>
-        ) : (
-            <View>
-                <Text>
-                    Loading...
-                </Text>
-            </View>
-        ))
-    )
+export default function ProfileDisplay({
+  profile,
+}: {
+  profile: Profile | null;
+}) {
+  return profile ? (
+    <View className="flex justify-center items-center p-5 bg-not-quite-dark-blue"></View>
+  ) : (
+    <View>
+      <Text>Loading...</Text>
+    </View>
+  );
 }

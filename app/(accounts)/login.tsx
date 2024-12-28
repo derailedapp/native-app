@@ -15,7 +15,15 @@
 */
 
 import * as React from "react";
-import { View, Text, TextInput, Button, Pressable, ImageBackground, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  Pressable,
+  ImageBackground,
+  StyleSheet,
+} from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { userLogin } from "@/lib/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -46,7 +54,14 @@ export default function Login() {
 
   return (
     <View>
-      <ImageBackground source={require("../../assets/images/beams.jpg")} resizeMode="cover" resizeMethod="scale" style={styles.container} width={1392.2} height={928}>
+      <ImageBackground
+        source={require("../../assets/images/beams.jpg")}
+        resizeMode="cover"
+        resizeMethod="scale"
+        style={styles.container}
+        width={1392.2}
+        height={928}
+      >
         <View className="flex flex-col justify-center h-screen lg:items-start sm:items-center lg:pl-32 backdrop-blur-[8px]">
           <View className="flex flex-col justify-center items-center bg-tender-surrender/70 dark:bg-not-quite-dark-blue/85 p-4 py-8 sm:rounded-md">
             <Text className="text-not-quite-dark-blue dark:text-white text-2xl font-main font-bold">
@@ -56,9 +71,10 @@ export default function Login() {
               We're glad to have you coming back
             </Text>
             <View className="black-glass-50 dark:white-glass-50 gap-5 xl:gap-10 xl:p-10 p-7 rounded-2xl">
-
               <View className="gap-2 lg:gap-3 min-w-80 xl:min-w-96">
-                <Text className="text-not-quite-dark-blue dark:text-gray-300 text-lg font-main">Email</Text>
+                <Text className="text-not-quite-dark-blue dark:text-gray-300 text-lg font-main">
+                  Email
+                </Text>
                 <Controller
                   // @ts-ignore
                   control={control}
@@ -106,20 +122,20 @@ export default function Login() {
                   </Text>
                 </Pressable>
                 <Link href="/(accounts)/register" className="w-full">
-                    <View className="border border-not-quite-dark-blue dark:border-white p-2 w-full rounded-lg">
-                      <Text className="text-not-quite-dark-blue text-center dark:text-white text-lg font-main">
-                        Register
-                      </Text>
-                    </View>
+                  <View className="border border-not-quite-dark-blue dark:border-white p-2 w-full rounded-lg">
+                    <Text className="text-not-quite-dark-blue text-center dark:text-white text-lg font-main">
+                      Register
+                    </Text>
+                  </View>
                 </Link>
               </View>
             </View>
           </View>
           <View className="flex justify-center items-center lg:items-start mt-5">
             <Link href="https://unsplash.com/@mo_design_3d">
-                <Text className="text-blue-500/95 text-center lg:text-left">
-                  Photo by Mo on Unsplash
-                </Text>
+              <Text className="text-blue-500/95 text-center lg:text-left">
+                Photo by Mo on Unsplash
+              </Text>
             </Link>
           </View>
         </View>
@@ -131,7 +147,7 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
-    height: '100%',
-  }
+    width: "100%",
+    height: "100%",
+  },
 });
