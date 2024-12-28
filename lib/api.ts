@@ -49,16 +49,11 @@ export const userLogin = async (email: string, password: string) => {
     return [data.token, data.user];
 }
 
-export const scrollExc = async (exclude: string[]): Promise<Post[]> => {
+export const scrollGlobal = async (beforeTs: number | undefined = undefined): Promise<Post[]> => {
     const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/posts/scroll");
-    if (exclude.length > 0) {
-        const params = new URLSearchParams();
-        var ex = exclude.join("&");
-        if (exclude.length === 1) {
-            ex += "&";
-        }
-        params.append("exclude", ex);
-        url.search = params.toString();
+
+    if (beforeTs !== undefined) {
+        url.searchParams.set("before_ts", beforeTs.toString());
     }
 
     const resp = await fetch(url, {
@@ -70,6 +65,15 @@ export const scrollExc = async (exclude: string[]): Promise<Post[]> => {
 
 export const getProfile = async (user_id: string): Promise<Profile> => {
     const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/users/" + user_id);
+    const resp = await fetch(url, {
+        method: "GET",
+    });
+
+    return await resp.json();
+}
+
+export const getUserPosts = async (user_id: string): Promise<Post[]> => {
+    const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/users/" + user_id + "/posts");
     const resp = await fetch(url, {
         method: "GET",
     });

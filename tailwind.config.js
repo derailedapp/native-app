@@ -13,7 +13,8 @@ module.exports = {
             brand: "rgb(115 100 255)",
             borders: "rgb(118, 171, 174)",
             "not-quite-dark-blue": "rgb(13, 17, 23)",
-            "quite-lighter-dark-blue": "rgb(21, 27, 35)"
+            "quite-lighter-dark-blue": "rgb(21, 27, 35)",
+            "tender-surrender": "rgba(252,194,156,255)"
         },
       },
     },

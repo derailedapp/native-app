@@ -50,6 +50,24 @@ export default function RootLayout() {
         }}
       />
       <Stack.Screen
+        name="(accounts)/login"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="(accounts)/register"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="[user]"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="post"
         options={{
           presentation: 'transparentModal',

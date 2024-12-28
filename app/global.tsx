@@ -16,43 +16,19 @@
 
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
-import { getCurrentProfile, getProfile, Post, Profile, scrollExc } from "@/lib/api";
+import { getCurrentProfile, getProfile, Post, Profile, scrollGlobal } from "@/lib/api";
 import PostList from "@/components/PostList";
 import { View } from "react-native";
 import { tokenStorage } from "@/lib/state";
 import LogoHead from "@/components/LogoHead";
 
 export default function GlobalFeed() {
-    const [posts, setPosts] = useState<Post[]>([
-        {
-            id: "woo",
-            type: 0,
-            author_id: "noo",
-            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            original_ts: 1735237874,
-            indexed_ts: 1735237874,
-            parent_id: null,
-            signature: "papi"
-        }
-    ]);
-    const [profiles, setProfiles] = useState<Profile[]>([{
-        actor: {
-            id: "noo",
-            handle: null,
-            display_name: "Display Name",
-            bio: null,
-            status: null,
-            public_key: ""
-        },
-        followed: 0,
-        following: 0,
-        posts: 0
-    }]);
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [profiles, setProfiles] = useState<Profile[]>([]);
     const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
 
     useEffect(() => {
-        scrollExc(posts.map(p => p.id)).then((scrollPosts) => {
-            scrollPosts = [...scrollPosts, ...posts];
+        scrollGlobal().then((scrollPosts) => {
             const scrollProfiles = [...profiles];
 
             scrollPosts.forEach(p => {
@@ -69,7 +45,6 @@ export default function GlobalFeed() {
             }).catch(() => tokenStorage.delete("token"));
         }
     }, []);
-
 
     return (
         <View className={"flex flex-row justify-center min-w-full m-auto bg-not-quite-dark-blue gap-4"}>
