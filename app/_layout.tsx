@@ -28,7 +28,9 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     MonaSans: require("../assets/fonts/MonaSans-Variable.ttf"),
     MonaSansItalic: require("../assets/fonts/MonaSans-Italic-Variable.ttf"),
-    MonaspaceNeon: require("../assets/fonts/MonaspaceNeon-Variable.ttf"),
+    MonaspaceNeon: require("../assets/fonts/MonaspaceNeon-Variable.ttf")
+  });
+  useFonts({
     AppleColorEmoji: require("../assets/fonts/AppleColorEmoji.ttf")
   });
 
