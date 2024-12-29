@@ -14,12 +14,11 @@
    limitations under the License.
 */
 
-import { useRouter } from "expo-router";
 import { Image, Pressable, View } from "react-native";
 
 export default function LogoHead() {
   return (
-    <View className="bg-not-quite-dark-blue flex items-center justify-center p-4">
+    <View className="bg-not-quite-dark-blue flex items-center justify-center p-9">
       <Image
         className="max-h-[37.3px] max-w-[42.8px]"
         source={require("../assets/images/blub_icon_brand_RGB.svg")}

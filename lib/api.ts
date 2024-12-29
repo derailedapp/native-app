@@ -21,20 +21,17 @@ export const createUser = async (
   username: string,
   password: string,
 ) => {
-  const resp = await fetch(
-    process.env.EXPO_PUBLIC_API_URL + "/users/register",
-    {
-      method: "POST",
-      body: JSON.stringify({
-        email,
-        username,
-        password,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+  const resp = await fetch(process.env.EXPO_PUBLIC_API_URL + "/users/create", {
+    method: "POST",
+    body: JSON.stringify({
+      email,
+      username,
+      password,
+    }),
+    headers: {
+      "Content-Type": "application/json",
     },
-  );
+  });
 
   const data = await resp.json();
   return [data.token, data.user];
@@ -105,11 +102,14 @@ export const getCurrentProfile = async (): Promise<Profile> => {
   return await resp.json();
 };
 
-export const createPost = async (): Promise<Post> => {
+export const createPost = async (content: string): Promise<Post> => {
   const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/posts");
   const resp = await fetch(url, {
     method: "POST",
     mode: "cors",
+    body: JSON.stringify({
+      content: content,
+    }),
     headers: {
       Authorization: tokenStorage.getString("token")!,
       "Content-Type": "application/json",

@@ -28,9 +28,10 @@ export default function PostList({
 }) {
   // TODO: markdown formatting
   return (
-    <View className="lg:min-w-[48rem] max-w-[48rem] border-l border-r border-borders min-h-screen min-w-full">
+    <View className="lg:min-w-[48rem] max-w-[48rem] min-h-screen min-w-full pt-5">
       <FlashList
-        data={posts}
+        estimatedItemSize={150}
+        data={posts.sort((a, b) => b.indexed_ts - a.indexed_ts)}
         className="flex flex-row"
         renderItem={({ item }) => <PostComp item={item} profiles={profiles} />}
       />

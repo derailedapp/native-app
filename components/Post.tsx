@@ -27,33 +27,36 @@ export default function PostComp({
   item: Post;
   profiles: Profile[];
 }) {
-  let profile = profiles.find((profile) => profile.actor.id == item.author_id)!;
-  let actor = profile.actor;
+  let profile = profiles.find((profile) => profile.actor.id == item.author_id);
+  let actor = profile?.actor;
   const day = item.indexed_ts + 86400;
 
   var date: string;
+  const d = new Date();
+  d.setTime(item.indexed_ts);
   if (Date.now() > day) {
-    date = moment.unix(item.indexed_ts).fromNow();
+    date = moment.utc(d).fromNow();
   } else {
-    date = moment.unix(item.indexed_ts).calendar();
+    date = moment.utc(d).calendar();
   }
   return (
     <View
       id={item.id}
-      className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 hover:bg-quite-lighter-dark-blue p-5 border-b border-t border-white"
+      className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 bg-quite-lighter-dark-blue p-5 my-1.5 rounded-md border border-borders"
     >
-      <View className="flex flex-row place-items-start items-center gap-1 pb-4">
-        <Link href={`/!${item.id}`}>
-          <Text className="text-white font-main font-semibold">
-            {sanitize(actor.display_name || actor.id)}
-          </Text>
-        </Link>
-        <Text className="text-white">•</Text>
-        <Link href={`/!${item.id}`}>
-          <Text className="text-white/70 font-main">
-            @{actor.handle || actor.id}
-          </Text>
-        </Link>
+      <View className="flex flex-row gap-1 pb-4 w-full">
+        <View className="flex flex-col items-center pb-4">
+          <Link href={`/!${actor?.id}`}>
+            <Text className="text-white font-main font-semibold">
+              {sanitize(actor?.display_name || actor?.id || "null")}
+            </Text>
+          </Link>
+          <Link href={`/!${actor?.id}`}>
+            <Text className="text-white/70 font-main">
+              @{actor?.handle || actor?.id}
+            </Text>
+          </Link>
+        </View>
         <Text className="text-white">•</Text>
         <Text className="text-white">{date}</Text>
       </View>

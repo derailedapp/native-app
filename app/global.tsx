@@ -43,11 +43,10 @@ export default function GlobalFeed() {
           p.author_id !== null
         ) {
           getProfile(p.author_id!).then((profile) =>
-            scrollProfiles.push(profile),
+            setProfiles([...profiles, profile]),
           );
         }
       });
-      setProfiles(scrollProfiles);
       setPosts(scrollPosts);
     });
     if (tokenStorage.contains("token")) {
@@ -66,7 +65,7 @@ export default function GlobalFeed() {
       }
     >
       <Sidebar />
-      <View className="border-l border-r border-white">
+      <View>
         <LogoHead />
         <PostList posts={posts} profiles={profiles} />
       </View>

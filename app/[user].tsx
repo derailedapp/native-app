@@ -24,7 +24,7 @@ import {
   Profile,
 } from "@/lib/api";
 import PostList from "@/components/PostList";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { tokenStorage } from "@/lib/state";
 import LogoHead from "@/components/LogoHead";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -59,29 +59,9 @@ export default function UserProfile() {
   const [found, setFound] = useState(true);
 
   useEffect(() => {
-    if (tokenStorage.contains("token")) {
-      getCurrentProfile()
-        .then((profile) => {
-          setCurrentProfile(profile);
-        })
-        .catch(() => tokenStorage.delete("token"));
-    }
-    if (isMe) {
-      if (!currentProfile) {
-        router.push("..");
-      } else {
-        setThisProfile(currentProfile!);
-      }
-    } else {
-      getProfile(user.replace("!", "")).then((profile) => {
-        setThisProfile(profile);
-      });
-    }
     if (!thisProfile) {
-      setFound(false);
       return;
     }
-
     getUserPosts(thisProfile!.actor.id).then((scrollPosts) => {
       const scrollProfiles: Profile[] = [thisProfile!];
 
@@ -98,22 +78,52 @@ export default function UserProfile() {
       setProfiles(scrollProfiles);
       setPosts(scrollPosts);
     });
+  }, [thisProfile]);
+
+  useEffect(() => {
+    if (tokenStorage.contains("token")) {
+      getCurrentProfile()
+        .then((profile) => {
+          setCurrentProfile(profile);
+          if (isMe) {
+            setThisProfile(profile);
+          }
+        })
+        .catch(() => {
+          tokenStorage.delete("token");
+          if (isMe) {
+            router.push("..");
+          }
+        });
+    }
+    if (!isMe) {
+      getProfile(user.replace("!", ""))
+        .then((profile) => {
+          setThisProfile(profile);
+        })
+        .catch((reason) => {
+          setFound(false);
+          console.error(reason);
+        });
+    }
   }, []);
 
-  return found ? (
-    <View
-      className={
-        "flex flex-row justify-center min-w-full m-auto bg-not-quite-dark-blue gap-4"
-      }
-    >
-      <Sidebar />
-      <View className="border-l border-r border-white">
-        <LogoHead />
-        <ProfileDisplay profile={thisProfile} />
-        <PostList posts={posts} profiles={profiles} />
+  if (found) {
+    return (
+      <View
+        className={
+          "flex flex-row justify-center min-w-full m-auto bg-not-quite-dark-blue gap-4"
+        }
+      >
+        <Sidebar />
+        <View>
+          <LogoHead />
+          <ProfileDisplay profile={thisProfile} />
+          <PostList posts={posts} profiles={profiles} />
+        </View>
       </View>
-    </View>
-  ) : (
-    <NotFoundScreen />
-  );
+    );
+  } else {
+    return <NotFoundScreen />;
+  }
 }

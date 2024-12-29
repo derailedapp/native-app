@@ -10,9 +10,10 @@ export default function PostModal() {
   const router = useRouter();
 
   const post = () => {
-    createPost()
+    createPost(postContent)
       .then(() => {
-        router.replace("..");
+        router.push("/global");
+        router.reload();
       })
       .catch((err) => console.error(err));
   };
@@ -24,7 +25,7 @@ export default function PostModal() {
           <Link href="../">
             <Text className="text-blue-400">Cancel</Text>
           </Link>
-          <Pressable>
+          <Pressable onPress={post}>
             <View className="p-3 rounded-md">
               <Text className="text-brand">Post</Text>
             </View>
@@ -33,6 +34,8 @@ export default function PostModal() {
         <View className="flex flex-row items-center min-w-80">
           <TextInput
             multiline
+            onChangeText={(text) => setPostContent(text)}
+            value={postContent}
             placeholder="So, have I some news for you..."
             className="placeholder:text-gray-400 text-white h-40 min-w-80 text-xl"
           />
