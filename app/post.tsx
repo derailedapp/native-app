@@ -23,11 +23,11 @@ export default function PostModal() {
       <View className="bg-not-quite-dark-blue  p-4 gap-10 rounded-md min-w-80">
         <View className="flex flex-row justify-between">
           <Link href="../">
-            <Text className="text-blue-400">Cancel</Text>
+            <Text className="text-blue-400 font-main">Cancel</Text>
           </Link>
           <Pressable onPress={post}>
             <View className="p-3 rounded-md">
-              <Text className="text-brand">Post</Text>
+              <Text className="text-brand font-main">Post</Text>
             </View>
           </Pressable>
         </View>
@@ -37,7 +37,7 @@ export default function PostModal() {
             onChangeText={(text) => setPostContent(text)}
             value={postContent}
             placeholder="So, have I some news for you..."
-            className="placeholder:text-gray-400 text-white h-40 min-w-80 text-xl"
+            className="placeholder:text-gray-400 text-white font-main h-40 min-w-80 text-xl"
           />
         </View>
       </View>

@@ -6,8 +6,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        main: "'MonaSans'",
-        code: "'MonaspaceNeon'",
+        main: ["MonaSans", "AppleColorEmoji"],
+        code: ["MonaspaceNeon", "AppleColorEmoji"],
       },
       colors: {
         brand: "rgb(115 100 255)",
