@@ -55,7 +55,7 @@ export const userLogin = async (email: string, password: string) => {
 
 export const scrollGlobal = async (
   beforeTs: number | undefined = undefined,
-): Promise<Post[]> => {
+): Promise<Thread[]> => {
   const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/posts/scroll");
 
   if (beforeTs !== undefined) {
@@ -78,7 +78,7 @@ export const getProfile = async (user_id: string): Promise<Profile> => {
   return await resp.json();
 };
 
-export const getUserPosts = async (user_id: string): Promise<Post[]> => {
+export const getUserPosts = async (user_id: string): Promise<Thread[]> => {
   const url = new URL(
     process.env.EXPO_PUBLIC_API_URL + "/users/" + user_id + "/posts",
   );
@@ -144,4 +144,16 @@ export interface Profile {
   followed: number;
   following: number;
   posts: number;
+}
+
+export interface Reaction {
+  emoji: string;
+  reactions: number;
+}
+
+export interface Thread {
+  post: Post;
+  profile: Profile | undefined;
+  reactions: Reaction[];
+  children: Thread[];
 }

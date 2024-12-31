@@ -14,16 +14,16 @@
    limitations under the License.
 */
 
-import { Post, Profile } from "@/lib/api";
+import { Post, Profile, Thread } from "@/lib/api";
 import { FlashList } from "@shopify/flash-list";
 import { View } from "react-native";
 import PostComp from "./Post";
 
 export default function PostList({
-  posts,
+  threads,
   profiles,
 }: {
-  posts: Post[];
+  threads: Thread[];
   profiles: Profile[];
 }) {
   // TODO: markdown formatting
@@ -31,7 +31,7 @@ export default function PostList({
     <View className="lg:min-w-[48rem] max-w-[48rem] min-h-screen min-w-full pt-5">
       <FlashList
         estimatedItemSize={150}
-        data={posts.sort((a, b) => b.indexed_ts - a.indexed_ts)}
+        data={threads}
         className="flex flex-row"
         renderItem={({ item }) => <PostComp item={item} profiles={profiles} />}
       />

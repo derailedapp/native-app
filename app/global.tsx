@@ -22,6 +22,7 @@ import {
   Post,
   Profile,
   scrollGlobal,
+  Thread,
 } from "@/lib/api";
 import PostList from "@/components/PostList";
 import { View } from "react-native";
@@ -29,7 +30,7 @@ import { tokenStorage } from "@/lib/state";
 import LogoHead from "@/components/LogoHead";
 
 export default function GlobalFeed() {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [threads, setThreads] = useState<Thread[]>([]);
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
 
@@ -38,16 +39,18 @@ export default function GlobalFeed() {
       const scrollProfiles = [...profiles];
 
       scrollPosts.forEach((p) => {
-        if (
-          !profiles.find((profile) => profile.actor.id === p.author_id) &&
-          p.author_id !== null
-        ) {
-          getProfile(p.author_id!).then((profile) =>
-            setProfiles([...profiles, profile]),
-          );
+        const prof = scrollProfiles.find(
+          (p2) => p2.actor.id == p.profile!.actor.id,
+        );
+        if (prof === undefined) {
+          scrollProfiles.push(p.profile!);
+        } else {
+          scrollProfiles.splice(scrollProfiles.indexOf(prof), 1);
+          scrollProfiles.push(p.profile!);
         }
       });
-      setPosts(scrollPosts);
+      setProfiles(scrollProfiles);
+      setThreads(scrollPosts);
     });
     if (tokenStorage.contains("token")) {
       getCurrentProfile()
@@ -67,7 +70,12 @@ export default function GlobalFeed() {
       <Sidebar />
       <View>
         <LogoHead />
-        <PostList posts={posts} profiles={profiles} />
+        <PostList
+          threads={threads.sort(
+            (a, b) => b.post.indexed_ts - a.post.indexed_ts,
+          )}
+          profiles={profiles}
+        />
       </View>
     </View>
   );

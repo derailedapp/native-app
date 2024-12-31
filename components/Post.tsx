@@ -18,22 +18,24 @@ import { Link } from "expo-router";
 import { Text, View } from "react-native";
 import sanitize from "sanitize-html";
 import moment from "moment";
-import { Post, Profile } from "@/lib/api";
+import { Post, Profile, Thread } from "@/lib/api";
 
 export default function PostComp({
   item,
   profiles,
 }: {
-  item: Post;
+  item: Thread;
   profiles: Profile[];
 }) {
-  let profile = profiles.find((profile) => profile.actor.id == item.author_id);
+  let profile = profiles.find(
+    (profile) => profile.actor.id == item.profile?.actor.id,
+  );
   let actor = profile?.actor;
-  const day = item.indexed_ts + 86400;
+  const day = item.post.indexed_ts + 86400;
 
   var date: string;
   const d = new Date();
-  d.setTime(item.indexed_ts);
+  d.setTime(item.post.indexed_ts);
   if (Date.now() > day) {
     date = moment.utc(d).fromNow();
   } else {
@@ -41,7 +43,7 @@ export default function PostComp({
   }
   return (
     <View
-      id={item.id}
+      id={item.post.id}
       className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 bg-quite-lighter-dark-blue p-5 my-1.5 rounded-md border border-borders"
     >
       <View className="flex flex-row gap-1 pb-4 w-full">
@@ -62,7 +64,7 @@ export default function PostComp({
       </View>
       <View>
         <Text className="text-white font-main font-medium max-w-sm md:max-w-xl lg:max-w-2xl text-wrap">
-          {sanitize(item.content)}
+          {sanitize(item.post.content)}
         </Text>
       </View>
     </View>

@@ -22,6 +22,7 @@ import {
   getUserPosts,
   Post,
   Profile,
+  Thread,
 } from "@/lib/api";
 import PostList from "@/components/PostList";
 import { Text, View } from "react-native";
@@ -53,7 +54,7 @@ export default function UserProfile() {
     return <NotFoundScreen />;
   }
 
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [threads, setThreads] = useState<Thread[]>([]);
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
   const [found, setFound] = useState(true);
@@ -63,20 +64,21 @@ export default function UserProfile() {
       return;
     }
     getUserPosts(thisProfile!.actor.id).then((scrollPosts) => {
-      const scrollProfiles: Profile[] = [thisProfile!];
+      const scrollProfiles = [...profiles];
 
       scrollPosts.forEach((p) => {
-        if (
-          !profiles.find((profile) => profile.actor.id === p.author_id) &&
-          p.author_id !== null
-        ) {
-          getProfile(p.author_id!).then((profile) =>
-            scrollProfiles.push(profile),
-          );
+        const prof = scrollProfiles.find(
+          (p2) => p2.actor.id == p.profile!.actor.id,
+        );
+        if (prof === undefined) {
+          scrollProfiles.push(p.profile!);
+        } else {
+          scrollProfiles.splice(scrollProfiles.indexOf(prof), 1);
+          scrollProfiles.push(p.profile!);
         }
       });
       setProfiles(scrollProfiles);
-      setPosts(scrollPosts);
+      setThreads(scrollPosts);
     });
   }, [thisProfile]);
 
@@ -119,7 +121,7 @@ export default function UserProfile() {
         <View>
           <LogoHead />
           <ProfileDisplay profile={thisProfile} />
-          <PostList posts={posts} profiles={profiles} />
+          <PostList threads={threads} profiles={profiles} />
         </View>
       </View>
     );
