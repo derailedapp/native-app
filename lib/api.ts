@@ -119,6 +119,37 @@ export const createPost = async (content: string): Promise<Post> => {
   return await resp.json();
 };
 
+export const createReply = async (
+  content: string,
+  parent_id: string,
+): Promise<Post> => {
+  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/posts");
+  const resp = await fetch(url, {
+    method: "POST",
+    mode: "cors",
+    body: JSON.stringify({
+      content: content,
+      parent_id: parent_id,
+    }),
+    headers: {
+      Authorization: tokenStorage.getString("token")!,
+      "Content-Type": "application/json",
+    },
+  });
+
+  return await resp.json();
+};
+
+export const getThread = async (post_id: string): Promise<Thread> => {
+  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/posts/" + post_id);
+  const resp = await fetch(url, {
+    method: "GET",
+    mode: "cors",
+  });
+
+  return await resp.json();
+};
+
 export interface Actor {
   id: string;
   handle: string | null;
@@ -153,7 +184,7 @@ export interface Reaction {
 
 export interface Thread {
   post: Post;
-  profile: Profile | undefined;
+  profile: Profile | null;
   reactions: Reaction[];
   children: Thread[];
 }

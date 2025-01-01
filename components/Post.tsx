@@ -14,11 +14,11 @@
    limitations under the License.
 */
 
-import { Link } from "expo-router";
-import { Text, View } from "react-native";
+import { Link, useRouter } from "expo-router";
+import { Pressable, Text, View } from "react-native";
 import sanitize from "sanitize-html";
 import moment from "moment";
-import { Post, Profile, Thread } from "@/lib/api";
+import { Profile, Thread } from "@/lib/api";
 
 export default function PostComp({
   item,
@@ -32,6 +32,7 @@ export default function PostComp({
   );
   let actor = profile?.actor;
   const day = item.post.indexed_ts + 86400;
+  const router = useRouter();
 
   var date: string;
   const d = new Date();
@@ -42,31 +43,33 @@ export default function PostComp({
     date = moment.utc(d).calendar();
   }
   return (
-    <View
-      id={item.post.id}
-      className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 bg-quite-lighter-dark-blue p-5 my-1.5 rounded-md border border-borders"
-    >
-      <View className="flex flex-row gap-1 pb-4 w-full">
-        <View className="flex flex-col items-center pb-4">
-          <Link href={`/!${actor?.id}`}>
-            <Text className="text-white font-main font-semibold">
-              {sanitize(actor?.display_name || actor?.id || "null")}
-            </Text>
-          </Link>
-          <Link href={`/!${actor?.id}`}>
-            <Text className="text-white/70 font-main">
-              @{actor?.handle || actor?.id}
-            </Text>
-          </Link>
+    <Pressable onPress={() => router.push(`/t/${item.post.id}`)}>
+      <View
+        id={item.post.id}
+        className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 bg-quite-lighter-dark-blue hover:bg-quite-lightier-lighter-dark-blue p-5 my-1.5 rounded-md border hover:border-leet border-borders"
+      >
+        <View className="flex flex-row gap-1 pb-4 w-full">
+          <View className="flex flex-col items-center pb-4">
+            <Link href={`/!${actor?.id}`}>
+              <Text className="text-white font-main font-semibold hover:underline">
+                {sanitize(actor?.display_name || actor?.id || "null")}
+              </Text>
+            </Link>
+            <Link href={`/!${actor?.id}`}>
+              <Text className="text-white/70 font-main">
+                @{actor?.handle || actor?.id}
+              </Text>
+            </Link>
+          </View>
+          <Text className="text-white">•</Text>
+          <Text className="text-white">{date}</Text>
         </View>
-        <Text className="text-white">•</Text>
-        <Text className="text-white">{date}</Text>
+        <View>
+          <Text className="text-white font-main font-medium max-w-sm md:max-w-xl lg:max-w-2xl text-wrap">
+            {sanitize(item.post.content)}
+          </Text>
+        </View>
       </View>
-      <View>
-        <Text className="text-white font-main font-medium max-w-sm md:max-w-xl lg:max-w-2xl text-wrap">
-          {sanitize(item.post.content)}
-        </Text>
-      </View>
-    </View>
+    </Pressable>
   );
 }

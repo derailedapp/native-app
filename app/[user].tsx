@@ -112,14 +112,9 @@ export default function UserProfile() {
 
   if (found) {
     return (
-      <View
-        className={
-          "flex flex-row justify-center min-w-full m-auto bg-not-quite-dark-blue gap-4"
-        }
-      >
+      <View className="flex flex-row justify-center min-w-full h-screen m-auto bg-not-quite-dark-blue overflow-y-auto">
         <Sidebar />
-        <View>
-          <LogoHead />
+        <View className="pt-9">
           <ProfileDisplay profile={thisProfile} />
           <PostList threads={threads} profiles={profiles} />
         </View>

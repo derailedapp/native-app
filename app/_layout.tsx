@@ -71,7 +71,21 @@ export default function RootLayout() {
         }}
       />
       <Stack.Screen
+        name="(threads)/t/[thread_id]/index"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="post"
+        options={{
+          presentation: "transparentModal",
+          animation: "fade",
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="(threads)/t/[thread_id]/reply"
         options={{
           presentation: "transparentModal",
           animation: "fade",

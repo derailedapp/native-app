@@ -16,18 +16,10 @@
 
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
-import {
-  getCurrentProfile,
-  getProfile,
-  Post,
-  Profile,
-  scrollGlobal,
-  Thread,
-} from "@/lib/api";
+import { getCurrentProfile, Profile, scrollGlobal, Thread } from "@/lib/api";
 import PostList from "@/components/PostList";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { tokenStorage } from "@/lib/state";
-import LogoHead from "@/components/LogoHead";
 
 export default function GlobalFeed() {
   const [threads, setThreads] = useState<Thread[]>([]);
@@ -64,12 +56,10 @@ export default function GlobalFeed() {
   return (
     <View
       className={
-        "flex flex-row justify-center min-w-full m-auto bg-not-quite-dark-blue gap-4"
+        "flex flex-row relative justify-center min-w-full h-screen mx-auto bg-not-quite-dark-blue overflow-y-auto"
       }
     >
-      <Sidebar />
-      <View>
-        <LogoHead />
+      <View className="px-5">
         <PostList
           threads={threads.sort(
             (a, b) => b.post.indexed_ts - a.post.indexed_ts,
@@ -77,6 +67,7 @@ export default function GlobalFeed() {
           profiles={profiles}
         />
       </View>
+      <Sidebar />
     </View>
   );
 }

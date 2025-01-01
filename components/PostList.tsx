@@ -14,9 +14,9 @@
    limitations under the License.
 */
 
-import { Post, Profile, Thread } from "@/lib/api";
+import { Profile, Thread } from "@/lib/api";
 import { FlashList } from "@shopify/flash-list";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import PostComp from "./Post";
 
 export default function PostList({
@@ -28,13 +28,24 @@ export default function PostList({
 }) {
   // TODO: markdown formatting
   return (
-    <View className="lg:min-w-[48rem] max-w-[48rem] min-h-screen min-w-full pt-5">
-      <FlashList
-        estimatedItemSize={150}
-        data={threads}
-        className="flex flex-row"
-        renderItem={({ item }) => <PostComp item={item} profiles={profiles} />}
-      />
+    <View className="w-[602px]">
+      {threads.length > 0 && (
+        <FlashList
+          estimatedItemSize={150}
+          data={threads}
+          className="flex flex-row"
+          renderItem={({ item }) => (
+            <PostComp item={item} profiles={profiles} />
+          )}
+        />
+      )}
+      {threads.length == 0 && (
+        <View className="flex justify-start items-start min-w-full bg-not-quite-dark-blue">
+          <Text className="text-white/70">
+            Oh no! It seems empty here... You can be the first to reply!
+          </Text>
+        </View>
+      )}
     </View>
   );
 }

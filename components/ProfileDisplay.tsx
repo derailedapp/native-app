@@ -16,6 +16,7 @@
 
 import { Profile } from "@/lib/api";
 import { Text, View } from "react-native";
+import sanitize from "sanitize-html";
 
 export default function ProfileDisplay({
   profile,
@@ -26,9 +27,11 @@ export default function ProfileDisplay({
     <View className="flex gap-4 p-5 bg-not-quite-dark-blue w-full border border-borders rounded-md">
       <View className="flex items-start">
         <Text className="text-white font-main font-semibold text-lg">
-          {profile?.actor.display_name ||
-            profile?.actor.handle ||
-            profile?.actor.id}
+          {sanitize(
+            profile?.actor.display_name ||
+              profile?.actor.handle ||
+              profile?.actor.id,
+          )}
         </Text>
         <Text className="font-main text-gray-400">
           {profile?.actor.handle
@@ -49,7 +52,7 @@ export default function ProfileDisplay({
       </View>
       <View className="flex justify-center w-full">
         <Text className="text-white">
-          {profile?.actor.bio || "This user has no bio."}
+          {sanitize(profile?.actor.bio || "This user has no bio.")}
         </Text>
       </View>
     </View>

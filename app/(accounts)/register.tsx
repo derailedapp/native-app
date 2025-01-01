@@ -136,6 +136,8 @@ export default function Register() {
                       onBlur={onBlur}
                       onChange={onChange}
                       value={value}
+                      secureTextEntry={true}
+                      textContentType="password"
                     />
                   )}
                   name="password"

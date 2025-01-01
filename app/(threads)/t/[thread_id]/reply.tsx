@@ -1,17 +1,19 @@
-import { createPost } from "@/lib/api";
-import { Link, useRouter } from "expo-router";
+import { createReply } from "@/lib/api";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 
-export default function PostModal() {
+export default function ReplyModal() {
   const [postContent, setPostContent] = useState("");
 
+  const localParams = useLocalSearchParams();
+  const thread_id = localParams.thread_id as string;
   const router = useRouter();
 
-  const post = () => {
-    createPost(postContent)
+  const reply = () => {
+    createReply(postContent, thread_id)
       .then(() => {
-        router.push("/global");
+        router.push(`/t/${thread_id}`);
         router.reload();
       })
       .catch((err) => console.error(err));
@@ -19,14 +21,14 @@ export default function PostModal() {
 
   return (
     <View className="flex-1 justify-center items-center bg-transparent backdrop-blur-sm backdrop-opacity-95 backdrop-brightness-50">
-      <View className="bg-not-quite-dark-blue p-4 gap-10 rounded-md min-w-80">
+      <View className="bg-not-quite-dark-blue  p-4 gap-10 rounded-md min-w-80">
         <View className="flex flex-row justify-between">
           <Link href="../">
             <Text className="text-blue-400 font-main">Cancel</Text>
           </Link>
-          <Pressable onPress={post}>
+          <Pressable onPress={reply}>
             <View className="p-3 rounded-md">
-              <Text className="text-brand font-main">Post</Text>
+              <Text className="text-brand font-main">Reply</Text>
             </View>
           </Pressable>
         </View>

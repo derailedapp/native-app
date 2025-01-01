@@ -14,6 +14,7 @@ module.exports = {
         borders: "rgb(61, 68, 77)",
         "not-quite-dark-blue": "rgb(13, 17, 23)",
         "quite-lighter-dark-blue": "rgb(22, 27, 34)",
+        "quite-lightier-lighter-dark-blue": "rgb(41, 46, 53)",
         "tender-surrender": "rgba(252,194,156,255)",
         leet: "rgb(101, 108, 118)",
       },

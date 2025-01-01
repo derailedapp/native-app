@@ -105,6 +105,8 @@ export default function Login() {
                       className="text-xl text-not-quite-dark-blue dark:text-white placeholder:italic p-2 rounded-lg border border-not-quite-dark-blue dark:border-white font-main"
                       placeholder="lactatingpregnantlatinas"
                       onBlur={onBlur}
+                      textContentType="password"
+                      secureTextEntry={true}
                       onChange={onChange}
                       value={value}
                     />
