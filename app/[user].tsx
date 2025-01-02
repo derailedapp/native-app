@@ -27,80 +27,56 @@ import { View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import NotFoundScreen from "./+not-found";
 import ProfileDisplay from "@/components/ProfileDisplay";
-import { tokenStorage, useCurrentProfileStore } from "@/lib/state";
+import { tokenStorage } from "@/lib/state";
 import { useQuery } from "@tanstack/react-query";
 
 // TODO: support handles
 export default function UserProfile() {
   const localParams = useLocalSearchParams();
   const user = localParams.user as string;
-  const router = useRouter();
-
-  const [thisProfile, setThisProfile] = useState<Profile | null>(null);
-
-  const setCurrentProfile = useCurrentProfileStore((state) => state.setProfile);
-
-  const query = useQuery({
-    queryKey: ["userTracks", user],
-    queryFn: async () => {
-      return await getUserTracks(thisProfile!.actor.id);
-    },
-  });
-
-  var isMe: boolean = false;
-
-  if (user.startsWith("@")) {
-    if (user == "@me") {
-      isMe = true;
-    } else {
-      return <NotFoundScreen />;
-    }
-  } else if (user.startsWith("!")) {
-    isMe = false;
-  } else {
-    return <NotFoundScreen />;
-  }
 
   const [found, setFound] = useState(true);
 
-  useEffect(() => {
-    if (tokenStorage.contains("token")) {
-      getCurrentProfile()
-        .then((profile) => {
-          setCurrentProfile(profile);
-          if (isMe) {
-            setThisProfile(profile);
-          }
-        })
-        .catch(() => {
-          tokenStorage.delete("token");
-          if (isMe) {
-            router.push("..");
-          }
-        });
-    }
-    if (!isMe) {
-      getProfile(user.replace("!", ""))
-        .then((profile) => {
-          setThisProfile(profile);
-        })
-        .catch((reason) => {
-          setFound(false);
-          console.error(reason);
-        });
-    }
-  }, []);
+  const profileQuery = useQuery({
+    queryKey: ["profile", user],
+    queryFn: async () => {
+      try {
+        return await getProfile(user.replace("!", ""));
+      } catch {
+        setFound(false);
+      }
+    },
+  });
+  const query = useQuery({
+    queryKey: ["userTracks", user],
+    queryFn: async () => {
+      return await getUserTracks(user.replace("!", ""));
+    },
+  });
+  const currentUserQuery = useQuery({
+    queryKey: ["currentProfile"],
+    queryFn: async () => {
+      if (tokenStorage.contains("token")) {
+        return await getCurrentProfile();
+      }
+    },
+  });
 
   if (found) {
     return (
       <View className="flex flex-row justify-center min-w-full h-screen m-auto bg-not-quite-dark-blue overflow-y-auto scroll-smooth">
         <Sidebar />
         <View className="pt-9">
-          <ProfileDisplay profile={thisProfile} />
+          <ProfileDisplay
+            profile={profileQuery.data}
+            currentUser={
+              profileQuery.data?.actor.id === currentUserQuery.data?.actor.id
+            }
+          />
           <PostList
             threads={
               query.data?.sort(
-                (a, b) => a.track.indexed_ts - b.track.indexed_ts,
+                (a, b) => b.track.indexed_ts - a.track.indexed_ts,
               ) || []
             }
           />

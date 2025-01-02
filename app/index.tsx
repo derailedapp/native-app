@@ -51,7 +51,7 @@ export default function GlobalFeed() {
         <PostList
           threads={
             query.data?.sort(
-              (a, b) => a.track.indexed_ts - b.track.indexed_ts,
+              (a, b) => b.track.indexed_ts - a.track.indexed_ts,
             ) || []
           }
         />

@@ -38,18 +38,17 @@ export default function ThreadComp({ item }: { item: Thread }) {
       className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 bg-quite-lighter-dark-blue p-3 scale-105 my-1.5 rounded-md border border-borders"
     >
       <View className="flex flex-row gap-1 pb-4 w-full">
-        <View className="flex flex-col items-center pb-4">
-          <Link href={`/!${actor?.id}`}>
-            <Text className="text-white font-main font-semibold hover:underline">
-              {sanitize(actor?.display_name || actor?.id || "null")}
-            </Text>
-          </Link>
-          <Link href={`/!${actor?.id}`}>
-            <Text className="text-white/70 font-main">
-              @{actor?.handle || actor?.id}
-            </Text>
-          </Link>
-        </View>
+        <Link href={`/!${actor?.id}`}>
+          <Text className="text-white font-main font-semibold hover:underline">
+            {sanitize(actor?.display_name || actor?.id || "null")}
+          </Text>
+        </Link>
+        <Text className="text-white">•</Text>
+        <Link href={`/!${actor?.id}`}>
+          <Text className="text-white/70 font-main">
+            @{actor?.handle || actor?.id}
+          </Text>
+        </Link>
         <Text className="text-white">•</Text>
         <Text className="text-white">{date}</Text>
       </View>

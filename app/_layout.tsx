@@ -96,6 +96,14 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="edit-self"
+          options={{
+            presentation: "transparentModal",
+            animation: "fade",
+            headerShown: false,
+          }}
+        />
       </Stack>
     </QueryClientProvider>
   );

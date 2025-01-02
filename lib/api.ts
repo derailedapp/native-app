@@ -19,6 +19,7 @@ import { tokenStorage } from "./state";
 export const createUser = async (email: string, password: string) => {
   const resp = await fetch(process.env.EXPO_PUBLIC_API_URL + "/users/create", {
     method: "POST",
+    mode: "cors",
     body: JSON.stringify({
       email,
       password,
@@ -35,6 +36,7 @@ export const createUser = async (email: string, password: string) => {
 export const userLogin = async (email: string, password: string) => {
   const resp = await fetch(process.env.EXPO_PUBLIC_API_URL + "/users/login", {
     method: "POST",
+    mode: "cors",
     body: JSON.stringify({
       email,
       password,
@@ -46,6 +48,35 @@ export const userLogin = async (email: string, password: string) => {
 
   const data = await resp.json();
   return [data.token, data.user];
+};
+
+export const userEdit = async (
+  email: string | undefined,
+  new_password: string | undefined,
+  old_password: string | undefined,
+  display_name: string | null | undefined,
+  bio: string | null | undefined,
+  status: string | null | undefined,
+): Promise<Profile> => {
+  const resp = await fetch(process.env.EXPO_PUBLIC_API_URL + "/users/@me", {
+    method: "PATCH",
+    mode: "cors",
+    body: JSON.stringify({
+      email,
+      new_password,
+      old_password,
+      display_name,
+      bio,
+      status,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: tokenStorage.getString("token")!,
+    },
+  });
+
+  const data = await resp.json();
+  return data;
 };
 
 export const scrollGlobal = async (
@@ -68,6 +99,10 @@ export const getProfile = async (user_id: string): Promise<Profile> => {
   const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/users/" + user_id);
   const resp = await fetch(url, {
     method: "GET",
+    mode: "cors",
+    headers: {
+      Authorization: tokenStorage.getString("token")!,
+    },
   });
 
   return await resp.json();
@@ -79,6 +114,10 @@ export const getUserTracks = async (user_id: string): Promise<Thread[]> => {
   );
   const resp = await fetch(url, {
     method: "GET",
+    mode: "cors",
+    headers: {
+      Authorization: tokenStorage.getString("token")!,
+    },
   });
 
   return await resp.json();

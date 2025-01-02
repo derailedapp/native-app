@@ -27,7 +27,7 @@ export default function PostModal() {
   const post = () => {
     createTrack(postContent)
       .then(() => {
-        router.push("/global");
+        router.push("/");
         router.reload();
       })
       .catch((err) => console.error(err));

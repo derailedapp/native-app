@@ -15,29 +15,42 @@
 */
 
 import { Profile } from "@/lib/api";
+import { Link } from "expo-router";
 import { Text, View } from "react-native";
 import sanitize from "sanitize-html";
 
 export default function ProfileDisplay({
   profile,
+  currentUser,
 }: {
-  profile: Profile | null;
+  profile: Profile | undefined;
+  currentUser: boolean;
 }) {
   return profile ? (
     <View className="flex gap-4 p-5 bg-not-quite-dark-blue w-full border border-borders rounded-md">
-      <View className="flex items-start">
-        <Text className="text-white font-main font-semibold text-lg">
-          {sanitize(
-            profile?.actor.display_name ||
-              profile?.actor.handle ||
-              profile?.actor.id,
-          )}
-        </Text>
-        <Text className="font-main text-gray-400">
-          {profile?.actor.handle
-            ? `@${profile?.actor.handle}`
-            : `!${profile?.actor.id}`}
-        </Text>
+      <View className="flex flex-row items-center justify-between w-full">
+        <View>
+          <Text className="text-white font-main font-semibold text-lg">
+            {sanitize(
+              profile?.actor.display_name ||
+                profile?.actor.handle ||
+                profile?.actor.id,
+            )}
+          </Text>
+          <Text className="font-main text-gray-400">
+            {profile?.actor.handle
+              ? `@${profile?.actor.handle}`
+              : `!${profile?.actor.id}`}
+          </Text>
+        </View>
+
+        {currentUser && (
+          <Link href="/edit-self">
+            <View className="bg-brand p-2 px-4 rounded-md">
+              <Text className="text-white">Edit</Text>
+            </View>
+          </Link>
+        )}
       </View>
       <View className="flex flex-row items-start w-full gap-5">
         <Text className="text-white font-main">

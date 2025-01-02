@@ -19,16 +19,13 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   Pressable,
   ImageBackground,
   StyleSheet,
 } from "react-native";
 import { Controller, useForm } from "react-hook-form";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Link, useRouter } from "expo-router";
 import { createUser } from "@/lib/api";
-import { useLinkProps } from "@react-navigation/native";
 import { tokenStorage } from "@/lib/state";
 
 export default function Register() {
@@ -49,7 +46,7 @@ export default function Register() {
   const onSubmit = async (data: { password: string; email: string }) => {
     const [token, _] = await createUser(data.email, data.password);
     tokenStorage.set("token", token);
-    router.push("/global");
+    router.push("/");
   };
 
   return (

@@ -19,14 +19,12 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   Pressable,
   ImageBackground,
   StyleSheet,
 } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { userLogin } from "@/lib/api";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Link, useRouter } from "expo-router";
 import { tokenStorage } from "@/lib/state";
 
@@ -49,7 +47,7 @@ export default function Login() {
 
     tokenStorage.set("token", token);
 
-    router.push("/global");
+    router.push("/");
   };
 
   return (
