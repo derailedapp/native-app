@@ -16,16 +16,11 @@
 
 import { tokenStorage } from "./state";
 
-export const createUser = async (
-  email: string,
-  username: string,
-  password: string,
-) => {
+export const createUser = async (email: string, password: string) => {
   const resp = await fetch(process.env.EXPO_PUBLIC_API_URL + "/users/create", {
     method: "POST",
     body: JSON.stringify({
       email,
-      username,
       password,
     }),
     headers: {
@@ -56,7 +51,7 @@ export const userLogin = async (email: string, password: string) => {
 export const scrollGlobal = async (
   beforeTs: number | undefined = undefined,
 ): Promise<Thread[]> => {
-  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/posts/scroll");
+  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/tracks/scroll");
 
   if (beforeTs !== undefined) {
     url.searchParams.set("before_ts", beforeTs.toString());
@@ -78,9 +73,9 @@ export const getProfile = async (user_id: string): Promise<Profile> => {
   return await resp.json();
 };
 
-export const getUserPosts = async (user_id: string): Promise<Thread[]> => {
+export const getUserTracks = async (user_id: string): Promise<Thread[]> => {
   const url = new URL(
-    process.env.EXPO_PUBLIC_API_URL + "/users/" + user_id + "/posts",
+    process.env.EXPO_PUBLIC_API_URL + "/users/" + user_id + "/tracks",
   );
   const resp = await fetch(url, {
     method: "GET",
@@ -102,8 +97,8 @@ export const getCurrentProfile = async (): Promise<Profile> => {
   return await resp.json();
 };
 
-export const createPost = async (content: string): Promise<Post> => {
-  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/posts");
+export const createTrack = async (content: string): Promise<Track> => {
+  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/tracks");
   const resp = await fetch(url, {
     method: "POST",
     mode: "cors",
@@ -122,8 +117,8 @@ export const createPost = async (content: string): Promise<Post> => {
 export const createReply = async (
   content: string,
   parent_id: string,
-): Promise<Post> => {
-  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/posts");
+): Promise<Track> => {
+  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/tracks");
   const resp = await fetch(url, {
     method: "POST",
     mode: "cors",
@@ -141,7 +136,7 @@ export const createReply = async (
 };
 
 export const getThread = async (post_id: string): Promise<Thread> => {
-  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/posts/" + post_id);
+  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/tracks/" + post_id);
   const resp = await fetch(url, {
     method: "GET",
     mode: "cors",
@@ -159,7 +154,7 @@ export interface Actor {
   public_key: string;
 }
 
-export interface Post {
+export interface Track {
   id: string;
   type: number;
   author_id: string | null;
@@ -174,7 +169,7 @@ export interface Profile {
   actor: Actor;
   followed: number;
   following: number;
-  posts: number;
+  tracks: number;
 }
 
 export interface Reaction {
@@ -183,7 +178,7 @@ export interface Reaction {
 }
 
 export interface Thread {
-  post: Post;
+  track: Track;
   profile: Profile | null;
   reactions: Reaction[];
   children: Thread[];

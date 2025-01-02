@@ -46,16 +46,8 @@ export default function Register() {
 
   const router = useRouter();
 
-  const onSubmit = async (data: {
-    password: string;
-    username: string;
-    email: string;
-  }) => {
-    const [token, _] = await createUser(
-      data.email,
-      data.username,
-      data.password,
-    );
+  const onSubmit = async (data: { password: string; email: string }) => {
+    const [token, _] = await createUser(data.email, data.password);
     tokenStorage.set("token", token);
     router.push("/global");
   };
@@ -79,27 +71,6 @@ export default function Register() {
               We're glad to have you riding along!
             </Text>
             <View className="black-glass-50 dark:white-glass-50 gap-5 xl:gap-10 xl:p-10 p-7 rounded-2xl">
-              <View className="gap-2 lg:gap-3 min-w-80 xl:min-w-96">
-                <Text className="text-not-quite-dark-blue dark:text-gray-300 text-lg font-main">
-                  Username
-                </Text>
-                <Controller
-                  // @ts-ignore
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                      className="text-xl text-not-quite-dark-blue dark:text-white placeholder:italic p-2 rounded-lg border border-not-quite-dark-blue dark:border-white font-main"
-                      placeholder="zeus"
-                      onBlur={onBlur}
-                      onChange={onChange}
-                      value={value}
-                    />
-                  )}
-                  name="username"
-                ></Controller>
-              </View>
-
               <View className="gap-2 lg:gap-3 min-w-80 xl:min-w-96">
                 <Text className="text-not-quite-dark-blue dark:text-gray-300 text-lg font-main">
                   Email

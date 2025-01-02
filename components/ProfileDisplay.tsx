@@ -47,7 +47,7 @@ export default function ProfileDisplay({
           {profile?.following || 0} <Text className="text-leet">Following</Text>
         </Text>
         <Text className="text-white font-main">
-          {profile?.posts || 0} <Text className="text-leet">Posts</Text>
+          {profile?.tracks || 0} <Text className="text-leet">Posts</Text>
         </Text>
       </View>
       <View className="flex justify-center w-full">

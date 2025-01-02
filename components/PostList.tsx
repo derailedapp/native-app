@@ -17,14 +17,14 @@
 import { Profile, Thread } from "@/lib/api";
 import { FlashList } from "@shopify/flash-list";
 import { Text, View } from "react-native";
-import PostComp from "./Post";
+import TrackComp from "./Track";
 
 export default function PostList({
   threads,
   profiles,
 }: {
   threads: Thread[];
-  profiles: Profile[];
+  profiles: Map<string, Profile>;
 }) {
   // TODO: markdown formatting
   return (
@@ -35,7 +35,7 @@ export default function PostList({
           data={threads}
           className="flex flex-row"
           renderItem={({ item }) => (
-            <PostComp item={item} profiles={profiles} />
+            <TrackComp item={item} profiles={profiles} />
           )}
         />
       )}

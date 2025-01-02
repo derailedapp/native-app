@@ -14,35 +14,37 @@
    limitations under the License.
 */
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import { getCurrentProfile, Profile, scrollGlobal, Thread } from "@/lib/api";
 import PostList from "@/components/PostList";
-import { Text, View } from "react-native";
-import { tokenStorage } from "@/lib/state";
+import { View } from "react-native";
+import {
+  tokenStorage,
+  useThreadStore,
+  useProfileStore,
+  useCurrentProfileStore,
+} from "@/lib/state";
 
 export default function GlobalFeed() {
-  const [threads, setThreads] = useState<Thread[]>([]);
-  const [profiles, setProfiles] = useState<Profile[]>([]);
-  const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
+  const insertTracks = useThreadStore((state) => state.insertTracks);
+  const insertProfiles = useProfileStore((state) => state.insertProfiles);
+  const setCurrentProfile = useCurrentProfileStore((state) => state.setProfile);
+
+  const tracks = useThreadStore((state) => state.threads);
+  const profiles = useProfileStore((state) => state.profiles);
 
   useEffect(() => {
     scrollGlobal().then((scrollPosts) => {
-      const scrollProfiles = [...profiles];
+      const scrollProfiles: Profile[] = [];
 
       scrollPosts.forEach((p) => {
-        const prof = scrollProfiles.find(
-          (p2) => p2.actor.id == p.profile!.actor.id,
-        );
-        if (prof === undefined) {
-          scrollProfiles.push(p.profile!);
-        } else {
-          scrollProfiles.splice(scrollProfiles.indexOf(prof), 1);
-          scrollProfiles.push(p.profile!);
+        if (p.profile) {
+          scrollProfiles.push(p.profile);
         }
       });
-      setProfiles(scrollProfiles);
-      setThreads(scrollPosts);
+      insertProfiles(scrollProfiles);
+      insertTracks(scrollPosts);
     });
     if (tokenStorage.contains("token")) {
       getCurrentProfile()
@@ -61,9 +63,15 @@ export default function GlobalFeed() {
     >
       <View className="px-5">
         <PostList
-          threads={threads.sort(
-            (a, b) => b.post.indexed_ts - a.post.indexed_ts,
-          )}
+          threads={tracks
+            .values()
+            .toArray()
+            .filter((value) => {
+              if (value.track.parent_id === null) {
+                return value;
+              }
+            })
+            .sort((a, b) => b.track.indexed_ts - a.track.indexed_ts)}
           profiles={profiles}
         />
       </View>

@@ -20,32 +20,30 @@ import sanitize from "sanitize-html";
 import moment from "moment";
 import { Profile, Thread } from "@/lib/api";
 
-export default function PostComp({
+export default function TrackComp({
   item,
   profiles,
 }: {
   item: Thread;
-  profiles: Profile[];
+  profiles: Map<string, Profile>;
 }) {
-  let profile = profiles.find(
-    (profile) => profile.actor.id == item.profile?.actor.id,
-  );
+  let profile = profiles.get(item.profile?.actor.id || "");
   let actor = profile?.actor;
-  const day = item.post.indexed_ts + 86400;
+  const day = item.track.indexed_ts + 86400;
   const router = useRouter();
 
   var date: string;
   const d = new Date();
-  d.setTime(item.post.indexed_ts);
+  d.setTime(item.track.indexed_ts);
   if (Date.now() > day) {
     date = moment.utc(d).fromNow();
   } else {
     date = moment.utc(d).calendar();
   }
   return (
-    <Pressable onPress={() => router.push(`/t/${item.post.id}`)}>
+    <Pressable onPress={() => router.push(`/t/${item.track.id}`)}>
       <View
-        id={item.post.id}
+        id={item.track.id}
         className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 bg-quite-lighter-dark-blue hover:bg-quite-lightier-lighter-dark-blue p-5 my-1.5 rounded-md border hover:border-leet border-borders"
       >
         <View className="flex flex-row gap-1 pb-4 w-full">
@@ -66,7 +64,7 @@ export default function PostComp({
         </View>
         <View>
           <Text className="text-white font-main font-medium max-w-sm md:max-w-xl lg:max-w-2xl text-wrap">
-            {sanitize(item.post.content)}
+            {sanitize(item.track.content)}
           </Text>
         </View>
       </View>

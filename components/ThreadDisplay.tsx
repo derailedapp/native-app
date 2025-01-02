@@ -25,17 +25,15 @@ export default function ThreadComp({
   profiles,
 }: {
   item: Thread;
-  profiles: Profile[];
+  profiles: Map<string, Profile>;
 }) {
-  let profile = profiles.find(
-    (profile) => profile.actor.id == item.profile?.actor.id,
-  );
+  let profile = profiles.get(item.profile?.actor.id || "");
   let actor = profile?.actor;
-  const day = item.post.indexed_ts + 86400;
+  const day = item.track.indexed_ts + 86400;
 
   var date: string;
   const d = new Date();
-  d.setTime(item.post.indexed_ts);
+  d.setTime(item.track.indexed_ts);
   if (Date.now() > day) {
     date = moment.utc(d).fromNow();
   } else {
@@ -43,7 +41,7 @@ export default function ThreadComp({
   }
   return (
     <View
-      id={item.post.id}
+      id={item.track.id}
       className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 bg-quite-lighter-dark-blue p-3 scale-105 my-1.5 rounded-md border border-borders"
     >
       <View className="flex flex-row gap-1 pb-4 w-full">
@@ -64,7 +62,7 @@ export default function ThreadComp({
       </View>
       <View>
         <Text className="text-white font-main font-medium max-w-sm md:max-w-xl lg:max-w-2xl text-wrap">
-          {sanitize(item.post.content)}
+          {sanitize(item.track.content)}
         </Text>
       </View>
     </View>

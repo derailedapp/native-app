@@ -19,18 +19,22 @@ import Sidebar from "../components/Sidebar";
 import {
   getCurrentProfile,
   getProfile,
-  getUserPosts,
-  Post,
+  getUserTracks,
+  Track,
   Profile,
   Thread,
 } from "@/lib/api";
 import PostList from "@/components/PostList";
-import { Text, View } from "react-native";
-import { tokenStorage } from "@/lib/state";
-import LogoHead from "@/components/LogoHead";
+import { View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import NotFoundScreen from "./+not-found";
 import ProfileDisplay from "@/components/ProfileDisplay";
+import {
+  tokenStorage,
+  useThreadStore,
+  useProfileStore,
+  useCurrentProfileStore,
+} from "@/lib/state";
 
 // TODO: support handles
 export default function UserProfile() {
@@ -39,6 +43,13 @@ export default function UserProfile() {
   const router = useRouter();
 
   const [thisProfile, setThisProfile] = useState<Profile | null>(null);
+
+  const insertTracks = useThreadStore((state) => state.insertTracks);
+  const insertProfiles = useProfileStore((state) => state.insertProfiles);
+  const setCurrentProfile = useCurrentProfileStore((state) => state.setProfile);
+
+  const tracks = useThreadStore((state) => state.threads);
+  const profiles = useProfileStore((state) => state.profiles);
 
   var isMe: boolean = false;
 
@@ -54,31 +65,22 @@ export default function UserProfile() {
     return <NotFoundScreen />;
   }
 
-  const [threads, setThreads] = useState<Thread[]>([]);
-  const [profiles, setProfiles] = useState<Profile[]>([]);
-  const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
   const [found, setFound] = useState(true);
 
   useEffect(() => {
     if (!thisProfile) {
       return;
     }
-    getUserPosts(thisProfile!.actor.id).then((scrollPosts) => {
-      const scrollProfiles = [...profiles];
+    getUserTracks(thisProfile!.actor.id).then((scrollPosts) => {
+      const scrollProfiles: Profile[] = [];
 
       scrollPosts.forEach((p) => {
-        const prof = scrollProfiles.find(
-          (p2) => p2.actor.id == p.profile!.actor.id,
-        );
-        if (prof === undefined) {
-          scrollProfiles.push(p.profile!);
-        } else {
-          scrollProfiles.splice(scrollProfiles.indexOf(prof), 1);
-          scrollProfiles.push(p.profile!);
+        if (p.profile) {
+          scrollProfiles.push(p.profile);
         }
       });
-      setProfiles(scrollProfiles);
-      setThreads(scrollPosts);
+      insertProfiles(scrollProfiles);
+      insertTracks(scrollPosts);
     });
   }, [thisProfile]);
 
@@ -116,7 +118,22 @@ export default function UserProfile() {
         <Sidebar />
         <View className="pt-9">
           <ProfileDisplay profile={thisProfile} />
-          <PostList threads={threads} profiles={profiles} />
+          <PostList
+            threads={tracks
+              .values()
+              .toArray()
+              .filter((value) => {
+                if (
+                  value.track.author_id === thisProfile?.actor.id &&
+                  value.track.parent_id === null &&
+                  thisProfile !== null
+                ) {
+                  return value;
+                }
+              })
+              .sort((a, b) => b.track.indexed_ts - a.track.indexed_ts)}
+            profiles={profiles}
+          />
         </View>
       </View>
     );
