@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import { getCurrentProfile, getThread, Profile, Thread } from "@/lib/api";
 import PostList from "@/components/PostList";
@@ -50,7 +50,7 @@ export default function ThreadView() {
         if (thread.profile) {
           profs.push(thread.profile);
         }
-        thread.children.forEach((t) => {
+        thread.children?.forEach((t) => {
           if (t.profile) {
             profs.push(t.profile);
           }
@@ -58,7 +58,9 @@ export default function ThreadView() {
         insertProfiles(profs);
 
         setCurrentTrack(thread);
-        insertTracks(thread.children);
+        if (thread.children) {
+          insertTracks(thread.children);
+        }
       })
       .catch((reason) => {
         console.error(reason);
@@ -72,7 +74,7 @@ export default function ThreadView() {
         })
         .catch(() => tokenStorage.delete("token"));
     }
-  }, []);
+  }, [thread_id]);
 
   return (
     <View

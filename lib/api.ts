@@ -181,5 +181,5 @@ export interface Thread {
   track: Track;
   profile: Profile | null;
   reactions: Reaction[];
-  children: Thread[];
+  children: Thread[] | undefined;
 }

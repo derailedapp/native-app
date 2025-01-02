@@ -42,7 +42,7 @@ export default function ReplyModal() {
 
   return (
     <View className="flex-1 justify-center items-center bg-transparent backdrop-blur-sm backdrop-opacity-95 backdrop-brightness-50">
-      <View className="bg-not-quite-dark-blue p-4 gap-10 rounded-md min-w-96">
+      <View className="bg-not-quite-dark-blue p-4 gap-10 rounded-md w-4/12 h-3/6">
         <View className="flex flex-row justify-between">
           <Link href="../">
             <Text className="text-blue-400 font-main">Cancel</Text>
@@ -53,7 +53,7 @@ export default function ReplyModal() {
             </View>
           </Pressable>
         </View>
-        <View className="flex flex-col items-center min-w-80 gap-10">
+        <View className="flex flex-col min-w-96 gap-10">
           {currentTrack && (
             <ThreadComp item={currentTrack} profiles={profiles} />
           )}
@@ -62,7 +62,7 @@ export default function ReplyModal() {
             onChangeText={(text) => setPostContent(text)}
             value={postContent}
             placeholder="So, have I some news for you..."
-            className="placeholder:text-gray-400 text-white font-main h-40 min-w-80 text-xl"
+            className="placeholder:text-gray-400 text-white font-main h-40 min-w-96 text-xl"
           />
         </View>
       </View>

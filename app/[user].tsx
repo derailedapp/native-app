@@ -20,9 +20,7 @@ import {
   getCurrentProfile,
   getProfile,
   getUserTracks,
-  Track,
   Profile,
-  Thread,
 } from "@/lib/api";
 import PostList from "@/components/PostList";
 import { View } from "react-native";
