@@ -23,50 +23,30 @@ import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import ThreadComp from "@/components/ThreadDisplay";
 import {
   tokenStorage,
-  useThreadStore,
-  useProfileStore,
   useCurrentProfileStore,
   useCurrentTrackStore,
 } from "@/lib/state";
+import { useQuery } from "@tanstack/react-query";
 
 export default function ThreadView() {
   const localParams = useLocalSearchParams();
   const thread_id = localParams.thread_id as string;
-  const router = useRouter();
 
-  const insertTracks = useThreadStore((state) => state.insertTracks);
-  const insertProfiles = useProfileStore((state) => state.insertProfiles);
   const setCurrentProfile = useCurrentProfileStore((state) => state.setProfile);
   const setCurrentTrack = useCurrentTrackStore((state) => state.setTrack);
 
-  const tracks = useThreadStore((state) => state.threads);
-  const profiles = useProfileStore((state) => state.profiles);
   const currentTrack = useCurrentTrackStore((state) => state.currentTrack);
 
+  const query = useQuery({
+    queryKey: ["threadChildren", thread_id],
+    queryFn: async () => {
+      let thread = await getThread(thread_id);
+      setCurrentTrack(thread);
+      return thread.children!;
+    },
+  });
+
   useEffect(() => {
-    getThread(thread_id)
-      .then((thread) => {
-        const profs = [];
-        if (thread.profile) {
-          profs.push(thread.profile);
-        }
-        thread.children?.forEach((t) => {
-          if (t.profile) {
-            profs.push(t.profile);
-          }
-        });
-        insertProfiles(profs);
-
-        setCurrentTrack(thread);
-        if (thread.children) {
-          insertTracks(thread.children);
-        }
-      })
-      .catch((reason) => {
-        console.error(reason);
-        router.push("..");
-      });
-
     if (tokenStorage.contains("token")) {
       getCurrentProfile()
         .then((profile) => {
@@ -74,36 +54,28 @@ export default function ThreadView() {
         })
         .catch(() => tokenStorage.delete("token"));
     }
-  }, [thread_id]);
+  }, []);
 
   return (
     <View
       className={
-        "flex flex-row justify-center min-w-full h-screen m-auto bg-not-quite-dark-blue gap-4 overflow-y-auto"
+        "flex flex-row justify-center min-w-full h-screen m-auto bg-not-quite-dark-blue gap-4 overflow-y-auto scroll-smooth"
       }
     >
       <Sidebar />
       <View className="pt-9">
-        {currentTrack && <ThreadComp item={currentTrack} profiles={profiles} />}
+        {currentTrack && <ThreadComp item={currentTrack} />}
         <Link href={`/t/${thread_id}/reply`}>
           <View className="w-full flex justify-start items-start my-4 p-3 rounded-md scale-105 bg-quite-lighter-dark-blue">
             <Text className="text-white/70 font-main">Write your reply...</Text>
           </View>
         </Link>
         <PostList
-          threads={tracks
-            .values()
-            .toArray()
-            .filter((value) => {
-              if (
-                value.track.parent_id === currentTrack?.track.id &&
-                currentTrack !== null
-              ) {
-                return value;
-              }
-            })
-            .sort((a, b) => b.track.indexed_ts - a.track.indexed_ts)}
-          profiles={profiles}
+          threads={
+            query.data?.sort(
+              (a, b) => a.track.indexed_ts - b.track.indexed_ts,
+            ) || []
+          }
         />
       </View>
     </View>

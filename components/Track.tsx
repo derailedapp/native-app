@@ -20,15 +20,8 @@ import sanitize from "sanitize-html";
 import moment from "moment";
 import { Profile, Thread } from "@/lib/api";
 
-export default function TrackComp({
-  item,
-  profiles,
-}: {
-  item: Thread;
-  profiles: Map<string, Profile>;
-}) {
-  let profile = profiles.get(item.profile?.actor.id || "");
-  let actor = profile?.actor;
+export default function TrackComp({ item }: { item: Thread }) {
+  let actor = item.profile?.actor;
   const day = item.track.indexed_ts + 86400;
   const router = useRouter();
 
@@ -41,9 +34,7 @@ export default function TrackComp({
     date = moment.utc(d).calendar();
   }
   return (
-    <Pressable
-      onPress={() => router.push(`/t/${item.track.id}`)}
-    >
+    <Pressable onPress={() => router.push(`/t/${item.track.id}`)}>
       <View
         id={item.track.id}
         className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 bg-quite-lighter-dark-blue hover:bg-quite-lightier-lighter-dark-blue p-5 my-1.5 rounded-md border hover:border-leet border-borders"

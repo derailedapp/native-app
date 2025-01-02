@@ -19,33 +19,19 @@ import Sidebar from "../components/Sidebar";
 import { getCurrentProfile, Profile, scrollGlobal, Thread } from "@/lib/api";
 import PostList from "@/components/PostList";
 import { View } from "react-native";
-import {
-  tokenStorage,
-  useThreadStore,
-  useProfileStore,
-  useCurrentProfileStore,
-} from "@/lib/state";
+import { tokenStorage, useCurrentProfileStore } from "@/lib/state";
+import { useQuery } from "@tanstack/react-query";
 
 export default function GlobalFeed() {
-  const insertTracks = useThreadStore((state) => state.insertTracks);
-  const insertProfiles = useProfileStore((state) => state.insertProfiles);
   const setCurrentProfile = useCurrentProfileStore((state) => state.setProfile);
-
-  const tracks = useThreadStore((state) => state.threads);
-  const profiles = useProfileStore((state) => state.profiles);
+  const query = useQuery({
+    queryKey: ["globalTracks"],
+    queryFn: async () => {
+      return await scrollGlobal();
+    },
+  });
 
   useEffect(() => {
-    scrollGlobal().then((scrollPosts) => {
-      const scrollProfiles: Profile[] = [];
-
-      scrollPosts.forEach((p) => {
-        if (p.profile) {
-          scrollProfiles.push(p.profile);
-        }
-      });
-      insertProfiles(scrollProfiles);
-      insertTracks(scrollPosts);
-    });
     if (tokenStorage.contains("token")) {
       getCurrentProfile()
         .then((profile) => {
@@ -58,21 +44,16 @@ export default function GlobalFeed() {
   return (
     <View
       className={
-        "flex flex-row relative justify-center min-w-full h-screen mx-auto bg-not-quite-dark-blue overflow-y-auto"
+        "flex flex-row relative justify-center min-w-full h-screen mx-auto bg-not-quite-dark-blue overflow-y-auto scroll-smooth"
       }
     >
       <View className="px-5">
         <PostList
-          threads={tracks
-            .values()
-            .toArray()
-            .filter((value) => {
-              if (value.track.parent_id === null) {
-                return value;
-              }
-            })
-            .sort((a, b) => b.track.indexed_ts - a.track.indexed_ts)}
-          profiles={profiles}
+          threads={
+            query.data?.sort(
+              (a, b) => a.track.indexed_ts - b.track.indexed_ts,
+            ) || []
+          }
         />
       </View>
       <Sidebar />

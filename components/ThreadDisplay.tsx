@@ -18,17 +18,10 @@ import { Link } from "expo-router";
 import { Text, View } from "react-native";
 import sanitize from "sanitize-html";
 import moment from "moment";
-import { Profile, Thread } from "@/lib/api";
+import { Thread } from "@/lib/api";
 
-export default function ThreadComp({
-  item,
-  profiles,
-}: {
-  item: Thread;
-  profiles: Map<string, Profile>;
-}) {
-  let profile = profiles.get(item.profile?.actor.id || "");
-  let actor = profile?.actor;
+export default function ThreadComp({ item }: { item: Thread }) {
+  let actor = item.profile?.actor;
   const day = item.track.indexed_ts + 86400;
 
   var date: string;

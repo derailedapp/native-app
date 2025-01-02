@@ -20,9 +20,12 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
 import "./global.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -45,53 +48,55 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack>
-      <Stack.Screen
-        name="global"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="(accounts)/login"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="(accounts)/register"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="[user]"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="(threads)/t/[thread_id]/index"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="post"
-        options={{
-          presentation: "transparentModal",
-          animation: "fade",
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="(threads)/t/[thread_id]/reply"
-        options={{
-          presentation: "transparentModal",
-          animation: "fade",
-          headerShown: false,
-        }}
-      />
-    </Stack>
+    <QueryClientProvider client={queryClient}>
+      <Stack>
+        <Stack.Screen
+          name="index"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="(accounts)/login"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="(accounts)/register"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="[user]"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="(threads)/t/[thread_id]/index"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="post"
+          options={{
+            presentation: "transparentModal",
+            animation: "fade",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="(threads)/t/[thread_id]/reply"
+          options={{
+            presentation: "transparentModal",
+            animation: "fade",
+            headerShown: false,
+          }}
+        />
+      </Stack>
+    </QueryClientProvider>
   );
 }

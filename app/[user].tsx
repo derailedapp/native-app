@@ -27,12 +27,8 @@ import { View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import NotFoundScreen from "./+not-found";
 import ProfileDisplay from "@/components/ProfileDisplay";
-import {
-  tokenStorage,
-  useThreadStore,
-  useProfileStore,
-  useCurrentProfileStore,
-} from "@/lib/state";
+import { tokenStorage, useCurrentProfileStore } from "@/lib/state";
+import { useQuery } from "@tanstack/react-query";
 
 // TODO: support handles
 export default function UserProfile() {
@@ -42,12 +38,14 @@ export default function UserProfile() {
 
   const [thisProfile, setThisProfile] = useState<Profile | null>(null);
 
-  const insertTracks = useThreadStore((state) => state.insertTracks);
-  const insertProfiles = useProfileStore((state) => state.insertProfiles);
   const setCurrentProfile = useCurrentProfileStore((state) => state.setProfile);
 
-  const tracks = useThreadStore((state) => state.threads);
-  const profiles = useProfileStore((state) => state.profiles);
+  const query = useQuery({
+    queryKey: ["userTracks", user],
+    queryFn: async () => {
+      return await getUserTracks(thisProfile!.actor.id);
+    },
+  });
 
   var isMe: boolean = false;
 
@@ -64,23 +62,6 @@ export default function UserProfile() {
   }
 
   const [found, setFound] = useState(true);
-
-  useEffect(() => {
-    if (!thisProfile) {
-      return;
-    }
-    getUserTracks(thisProfile!.actor.id).then((scrollPosts) => {
-      const scrollProfiles: Profile[] = [];
-
-      scrollPosts.forEach((p) => {
-        if (p.profile) {
-          scrollProfiles.push(p.profile);
-        }
-      });
-      insertProfiles(scrollProfiles);
-      insertTracks(scrollPosts);
-    });
-  }, [thisProfile]);
 
   useEffect(() => {
     if (tokenStorage.contains("token")) {
@@ -112,25 +93,16 @@ export default function UserProfile() {
 
   if (found) {
     return (
-      <View className="flex flex-row justify-center min-w-full h-screen m-auto bg-not-quite-dark-blue overflow-y-auto">
+      <View className="flex flex-row justify-center min-w-full h-screen m-auto bg-not-quite-dark-blue overflow-y-auto scroll-smooth">
         <Sidebar />
         <View className="pt-9">
           <ProfileDisplay profile={thisProfile} />
           <PostList
-            threads={tracks
-              .values()
-              .toArray()
-              .filter((value) => {
-                if (
-                  value.track.author_id === thisProfile?.actor.id &&
-                  value.track.parent_id === null &&
-                  thisProfile !== null
-                ) {
-                  return value;
-                }
-              })
-              .sort((a, b) => b.track.indexed_ts - a.track.indexed_ts)}
-            profiles={profiles}
+            threads={
+              query.data?.sort(
+                (a, b) => a.track.indexed_ts - b.track.indexed_ts,
+              ) || []
+            }
           />
         </View>
       </View>

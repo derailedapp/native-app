@@ -26,7 +26,7 @@ export default function Sidebar() {
   return (
     <View className="hidden lg:flex flex-col fixed left-1/2 top-[10px] w-[240px] h-screen gap-4 pr-[20px] pl-[20px] pt-9 overflow-y-auto sidetrans">
       <LogoHead />
-      <Link href="/global">
+      <Link href="/">
         <View className="flex flex-row items-center p-3 gap-3 hover:bg-quite-lighter-dark-blue ease-in-out transition duration-500 w-full rounded-xl">
           <Octicons name="home" size={24} color="white" />
           <Text className="text-white font-main text-lg">Home</Text>

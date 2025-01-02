@@ -14,18 +14,12 @@
    limitations under the License.
 */
 
-import { Profile, Thread } from "@/lib/api";
+import { Thread } from "@/lib/api";
 import { FlashList } from "@shopify/flash-list";
 import { Text, View } from "react-native";
 import TrackComp from "./Track";
 
-export default function PostList({
-  threads,
-  profiles,
-}: {
-  threads: Thread[];
-  profiles: Map<string, Profile>;
-}) {
+export default function PostList({ threads }: { threads: Thread[] }) {
   // TODO: markdown formatting
   return (
     <View className="w-[602px]">
@@ -34,9 +28,7 @@ export default function PostList({
           estimatedItemSize={150}
           data={threads}
           className="flex flex-row"
-          renderItem={({ item }) => (
-            <TrackComp item={item} profiles={profiles} />
-          )}
+          renderItem={({ item }) => <TrackComp item={item} />}
         />
       )}
       {threads.length == 0 && (
