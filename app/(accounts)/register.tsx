@@ -132,7 +132,7 @@ export default function Register() {
           </View>
           <View className="flex justify-center items-center lg:items-start mt-5">
             <Link href="https://unsplash.com/@mo_design_3d">
-              <Text className="text-blue-500/95 text-center lg:text-left">
+              <Text className="text-brand-dark text-center lg:text-left">
                 Photo by Mo on Unsplash
               </Text>
             </Link>

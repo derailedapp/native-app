@@ -10,7 +10,8 @@ module.exports = {
         code: ["MonaspaceNeon", "AppleColorEmoji"],
       },
       colors: {
-        brand: "rgb(115 100 255)",
+        brand: "rgb(59, 134, 255)",
+        "brand-dark": "rgb(25, 106, 189)",
         borders: "rgb(61, 68, 77)",
         "not-quite-dark-blue": "rgb(13, 17, 23)",
         "quite-lighter-dark-blue": "rgb(22, 27, 34)",

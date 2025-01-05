@@ -40,7 +40,7 @@ export default function Sidebar() {
       </Link>
       {tokenStorage.contains("token") && (
         <Link href="/post">
-          <View className="flex flex-row items-center p-3 gap-3 bg-brand hover:bg-brand/85 ease-in-out transition duration-500 rounded-sm min-w-32 mt-8">
+          <View className="flex flex-row items-center p-3 gap-3 bg-brand hover:bg-brand/85 ease-in-out transition duration-500 rounded-xl min-w-32 mt-8">
             <Octicons name="pencil" size={20} color="white" />
             <Text className="font-main text-white text-lg">Post</Text>
           </View>
@@ -48,7 +48,7 @@ export default function Sidebar() {
       )}
       {!tokenStorage.contains("token") && (
         <Link href="/login">
-          <View className="flex flex-row items-center p-3 gap-3 bg-brand hover:bg-brand/85 ease-in-out transition duration-500 rounded-sm min-w-32 mt-8">
+          <View className="flex flex-row items-center p-3 gap-3 bg-brand hover:bg-brand/85 ease-in-out transition duration-500 rounded-xl min-w-32 mt-8">
             <Octicons name="sign-in" size={20} color="white" />
             <Text className="font-main text-white text-lg">Login</Text>
           </View>
