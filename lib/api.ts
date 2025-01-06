@@ -17,7 +17,7 @@
 import { tokenStorage } from "./state";
 
 export const createUser = async (email: string, password: string) => {
-  const resp = await fetch(process.env.EXPO_PUBLIC_API_URL + "/users/create", {
+  const resp = await fetch(process.env.EXPO_PUBLIC_API_URL + "/create", {
     method: "POST",
     mode: "cors",
     body: JSON.stringify({
@@ -34,7 +34,7 @@ export const createUser = async (email: string, password: string) => {
 };
 
 export const userLogin = async (email: string, password: string) => {
-  const resp = await fetch(process.env.EXPO_PUBLIC_API_URL + "/users/login", {
+  const resp = await fetch(process.env.EXPO_PUBLIC_API_URL + "/login", {
     method: "POST",
     mode: "cors",
     body: JSON.stringify({

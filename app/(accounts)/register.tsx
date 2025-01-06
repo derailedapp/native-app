@@ -60,16 +60,16 @@ export default function Register() {
         height={928}
       >
         <View className="flex flex-col justify-center h-screen lg:items-start sm:items-center lg:pl-32 backdrop-blur-[8px]">
-          <View className="flex flex-col justify-center items-center bg-tender-surrender/70 dark:bg-not-quite-dark-blue/85 p-4 py-8 sm:rounded-md">
-            <Text className="text-not-quite-dark-blue dark:text-white text-2xl font-main font-bold">
+          <View className="flex flex-col justify-center items-center bg-tender-surrender/70 dark:bg-primary/85 py-8 sm:rounded-3xl">
+            <Text className="text-primary dark:text-white text-2xl font-main font-bold">
               Welcome to Derailed!
             </Text>
-            <Text className="text-not-quite-dark-blue dark:text-gray-300 text-xl font-light font-main pb-3 italic">
+            <Text className="text-primary dark:text-gray-300 text-xl font-light font-main pb-3 italic">
               We're glad to have you riding along!
             </Text>
             <View className="black-glass-50 dark:white-glass-50 gap-5 xl:gap-10 xl:p-10 p-7 rounded-2xl">
               <View className="gap-2 lg:gap-3 min-w-80 xl:min-w-96">
-                <Text className="text-not-quite-dark-blue dark:text-gray-300 text-lg font-main">
+                <Text className="text-primary dark:text-gray-300 text-lg font-main">
                   Email
                 </Text>
                 <Controller
@@ -78,7 +78,7 @@ export default function Register() {
                   rules={{ required: true }}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                      className="text-xl text-not-quite-dark-blue dark:text-white placeholder:italic p-2 rounded-lg border border-not-quite-dark-blue dark:border-white font-main"
+                      className="text-xl text-primary dark:text-white placeholder:italic p-2 rounded-lg border border-primary dark:border-white font-main"
                       placeholder="godsend@zeus.gods"
                       onBlur={onBlur}
                       onChange={onChange}
@@ -90,7 +90,7 @@ export default function Register() {
               </View>
 
               <View className="gap-2 lg:gap-3">
-                <Text className="text-not-quite-dark-blue dark:text-gray-300 text-lg font-main">
+                <Text className="text-primary dark:text-gray-300 text-lg font-main">
                   Password
                 </Text>
                 <Controller
@@ -99,7 +99,7 @@ export default function Register() {
                   rules={{ required: true }}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                      className="text-xl text-not-quite-dark-blue dark:text-white placeholder:italic p-2 rounded-lg border border-not-quite-dark-blue dark:border-white font-main"
+                      className="text-xl text-primary dark:text-white placeholder:italic p-2 rounded-lg border border-primary dark:border-white font-main"
                       placeholder="lactatingpregnantlatinas"
                       onBlur={onBlur}
                       onChange={onChange}
@@ -121,8 +121,8 @@ export default function Register() {
                   </Text>
                 </Pressable>
                 <Link href="/(accounts)/login" className="w-full">
-                  <View className="border border-not-quite-dark-blue dark:border-white p-2 w-full rounded-lg">
-                    <Text className="text-not-quite-dark-blue text-center dark:text-white text-lg font-main">
+                  <View className="border border-primary dark:border-white p-2 w-full rounded-lg">
+                    <Text className="text-primary text-center dark:text-white text-lg font-main">
                       Login
                     </Text>
                   </View>
@@ -132,7 +132,7 @@ export default function Register() {
           </View>
           <View className="flex justify-center items-center lg:items-start mt-5">
             <Link href="https://unsplash.com/@mo_design_3d">
-              <Text className="text-brand-dark text-center lg:text-left">
+              <Text className="text-brand text-center lg:text-left">
                 Photo by Mo on Unsplash
               </Text>
             </Link>

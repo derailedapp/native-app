@@ -41,8 +41,8 @@ export default function ReplyModal() {
 
   return (
     <View className="flex-1 justify-center items-center bg-transparent backdrop-blur-sm backdrop-opacity-95 backdrop-brightness-50">
-      <View className="bg-not-quite-dark-blue p-4 gap-10 rounded-md w-full lg:w-[33rem] h-3/6">
-        <View className="flex flex-row justify-between">
+      <View className="bg-primary/85 p-4 gap-10 rounded-md w-full lg:w-[33rem] h-3/6">
+        <View className="flex flex-row items-center justify-between">
           <Link href="../">
             <Text className="text-blue-400 font-main">Cancel</Text>
           </Link>

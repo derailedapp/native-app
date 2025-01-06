@@ -35,7 +35,7 @@ export default function ThreadComp({ item }: { item: Thread }) {
   return (
     <View
       id={item.track.id}
-      className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 bg-quite-lighter-dark-blue p-3 scale-105 my-1.5 rounded-md border border-borders"
+      className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 p-5 rounded-b-none bg-primary rounded-3xl"
     >
       <View className="flex flex-row gap-1 pb-4 w-full">
         <Link href={`/!${actor?.id}`}>
@@ -53,7 +53,7 @@ export default function ThreadComp({ item }: { item: Thread }) {
         <Text className="text-white">{date}</Text>
       </View>
       <View>
-        <Text className="text-white font-main font-medium max-w-sm md:max-w-xl lg:max-w-2xl text-wrap">
+        <Text className="text-white font-main font-medium max-w-md md:max-w-xl lg:max-w-2xl text-wrap">
           {sanitize(item.track.content)}
         </Text>
       </View>

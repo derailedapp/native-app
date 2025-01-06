@@ -21,6 +21,7 @@ import PostList from "@/components/PostList";
 import { View } from "react-native";
 import { tokenStorage, useCurrentProfileStore } from "@/lib/state";
 import { useQuery } from "@tanstack/react-query";
+import LogoHead from "@/components/LogoHead";
 
 export default function GlobalFeed() {
   const setCurrentProfile = useCurrentProfileStore((state) => state.setProfile);
@@ -44,19 +45,22 @@ export default function GlobalFeed() {
   return (
     <View
       className={
-        "flex flex-row relative justify-center min-w-full h-screen mx-auto bg-not-quite-dark-blue overflow-y-auto scroll-smooth"
+        "flex flex-row relative justify-center min-w-full h-screen mx-auto overflow-y-auto bg-black scroll-smooth"
       }
     >
-      <View className="px-5">
-        <PostList
-          threads={
-            query.data?.sort(
-              (a, b) => b.track.indexed_ts - a.track.indexed_ts,
-            ) || []
-          }
-        />
-      </View>
       <Sidebar />
+      <View className="bg-primary gap-4 rounded-t-3xl mt-9 pt-4">
+        <LogoHead />
+        <View className="overflow-y-auto">
+          <PostList
+            threads={
+              query.data?.sort(
+                (a, b) => b.track.indexed_ts - a.track.indexed_ts,
+              ) || []
+            }
+          />
+        </View>
+      </View>
     </View>
   );
 }

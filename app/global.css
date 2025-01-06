@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .sidetrans {
-  transform: translateX(-300px) translateX(-100%)
+  transform: translateX(-320px) translateX(-100%)
     translateX(calc(-1 * var(--removed-body-scroll-bar-size, 0px) / 2));
 }
 

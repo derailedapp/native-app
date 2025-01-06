@@ -18,7 +18,7 @@ import { Image, Pressable, View } from "react-native";
 
 export default function LogoHead() {
   return (
-    <View className="bg-not-quite-dark-blue flex justify-center items-center">
+    <View className="flex justify-center items-center">
       <Image
         className="max-h-[37.3px] max-w-[42.8px]"
         source={require("../assets/images/blub_icon_brand_RGB.svg")}

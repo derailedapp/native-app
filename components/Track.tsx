@@ -19,6 +19,7 @@ import { Pressable, Text, View } from "react-native";
 import sanitize from "sanitize-html";
 import moment from "moment";
 import { Profile, Thread } from "@/lib/api";
+import twMerge from "tw-merge";
 
 export default function TrackComp({ item }: { item: Thread }) {
   let actor = item.profile?.actor;
@@ -37,7 +38,7 @@ export default function TrackComp({ item }: { item: Thread }) {
     <Pressable onPress={() => router.push(`/t/${item.track.id}`)}>
       <View
         id={item.track.id}
-        className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 bg-quite-lighter-dark-blue hover:bg-quite-lightier-lighter-dark-blue p-5 my-1.5 rounded-md border hover:border-leet border-borders"
+        className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 bg-primary p-5 rounded-t-none rounded-b-none rounded-xl border-t border-b-none border-borders"
       >
         <View className="flex flex-row gap-1 pb-4 w-full">
           <Link href={`/!${actor?.id}`}>

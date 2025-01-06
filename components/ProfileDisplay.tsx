@@ -27,7 +27,7 @@ export default function ProfileDisplay({
   currentUser: boolean;
 }) {
   return profile ? (
-    <View className="flex gap-4 p-5 bg-not-quite-dark-blue w-full border border-borders rounded-md">
+    <View className="flex gap-4 p-5 bg-primary w-full rounded-3xl rounded-b-none">
       <View className="flex flex-row items-center justify-between w-full">
         <View>
           <Text className="text-white font-main font-semibold text-lg">
@@ -52,20 +52,20 @@ export default function ProfileDisplay({
           </Link>
         )}
       </View>
-      <View className="flex flex-row items-start w-full gap-5">
-        <Text className="text-white font-main">
-          {profile?.followed || 0} <Text className="text-leet">Followed</Text>
-        </Text>
-        <Text className="text-white font-main">
-          {profile?.following || 0} <Text className="text-leet">Following</Text>
-        </Text>
-        <Text className="text-white font-main">
-          {profile?.tracks || 0} <Text className="text-leet">Posts</Text>
-        </Text>
-      </View>
       <View className="flex justify-center w-full">
         <Text className="text-white">
           {sanitize(profile?.actor.bio || "This user has no bio.")}
+        </Text>
+      </View>
+      <View className="flex flex-row items-start w-full gap-5">
+        <Text className="font-main text-graaaay">
+          {profile?.followed || 0} Followed
+        </Text>
+        <Text className="font-main text-graaaay">
+          {profile?.following || 0} Following
+        </Text>
+        <Text className="font-main text-graaaay">
+          {profile?.tracks || 0} Posts
         </Text>
       </View>
     </View>

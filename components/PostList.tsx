@@ -27,12 +27,12 @@ export default function PostList({ threads }: { threads: Thread[] }) {
         <FlashList
           estimatedItemSize={150}
           data={threads}
-          className="flex flex-row"
+          className="flex flex-row rounded-b-3xl"
           renderItem={({ item }) => <TrackComp item={item} />}
         />
       )}
       {threads.length == 0 && (
-        <View className="flex justify-start items-start min-w-full bg-not-quite-dark-blue">
+        <View className="flex justify-start items-start h-full w-full p-4 rounded-xl rounded-t-none border-t border-borders bg-primary">
           <Text className="text-white/70">
             Oh no! It seems empty here... You can be the first to reply!
           </Text>
