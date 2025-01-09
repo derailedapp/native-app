@@ -59,14 +59,14 @@ export default function ThreadView() {
   return (
     <View
       className={
-        "flex flex-row justify-center w-full h-screen m-auto bg-black gap-4 overflow-y-auto scroll-smooth"
+        "flex flex-row justify-center w-full h-screen m-auto bg-primary gap-4 overflow-y-auto scroll-smooth"
       }
     >
       <Sidebar />
-      <View className="pt-9">
+      <View className="lg:pt-9 max-lg:w-full">
         {currentTrack && <ThreadComp item={currentTrack} />}
         <Link href={`/t/${thread_id}/reply`}>
-          <View className="w-full flex justify-start items-start border-t border-borders p-3 rounded-xl rounded-t-none rounded-b-none bg-primary">
+          <View className="w-full flex justify-start items-start border-t border-borders p-3 rounded-xl rounded-t-none rounded-b-none bg-secondary">
             <Text className="text-white/70 font-main">Write your reply...</Text>
           </View>
         </Link>

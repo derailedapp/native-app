@@ -16,7 +16,7 @@ export default function TrackMeta({ item }: { item: Thread }) {
     const router = useRouter();
 
     return (
-        <View className="flex flex-row items-center justify-between w-full pt-4 lg:pt-6">
+        <View className="flex flex-row items-center justify-between w-full">
             <Pressable onPress={async () => {
             if (!tokenStorage.contains("token")) {
                 return;
@@ -31,13 +31,13 @@ export default function TrackMeta({ item }: { item: Thread }) {
 
             setLiked(!liked);
             }}>
-            <View className="flex flex-row items-center gap-2 p-2 rounded-full hover:bg-secondary">
+            <View className="flex flex-row items-center gap-2 p-2 rounded-full hover:bg-tertiary">
                 <Octicons name={liked && "heart-fill" || "heart"} size={18} className={liked && "text-brand" || "text-graaaay"}  />
                 <Text className="text-graaaay font-main font-medium">{likes}</Text>
             </View>
             </Pressable>
             <Pressable onPress={() => router.push(`/(threads)/t/${item.track.id}/reply`)}>
-            <View className="flex flex-row items-center gap-2 p-2 rounded-full hover:bg-secondary">
+            <View className="flex flex-row items-center gap-2 p-2 rounded-full hover:bg-tertiary">
                 <Octicons name="comment" size={18} className="text-graaaay"  />
                 <Text className="text-graaaay font-main font-medium">{item.comments}</Text>
             </View>
@@ -56,7 +56,7 @@ export default function TrackMeta({ item }: { item: Thread }) {
 
             setBookmarked(!bookmarked)
             }}>
-            <View className="flex flex-row items-center gap-2 p-2 rounded-full hover:bg-secondary">
+            <View className="flex flex-row items-center gap-2 p-2 rounded-full hover:bg-tertiary">
                 <Octicons name="bookmark" size={18} className={bookmarked && "text-brand" || "text-graaaay"}  />
                 <Text className="text-graaaay font-main font-medium">{bookmarks}</Text>
             </View>

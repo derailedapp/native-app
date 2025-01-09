@@ -44,25 +44,23 @@ export default function GlobalFeed() {
   return (
     <View
       className={
-        "flex flex-row relative justify-center w-full h-screen mx-auto overflow-y-auto bg-black scroll-smooth"
+        "flex flex-row relative justify-center w-full h-screen mx-auto overflow-y-auto bg-primary scroll-smooth"
       }
     >
       <Sidebar />
-      <View className="fixed flex justify-center items-center bg-black/50 lg:bg-primary/50 backdrop-blur-xl underline decoration-brand overflow-y-auto backdrop-brightness-50 z-10 max-lg:py-5 lg:p-5 w-full lg:w-[602px]">
-        <Text className="text-xl text-white font-main font-semibold overflow-y-auto text-center">
+      <View className="fixed border border-bobo max-lg:scale-110 flex top-0 justify-center items-center bg-primary lg:bg-primary/65 lg:backdrop-blur-lg underline decoration-brand overflow-y-auto backdrop-brightness-50 z-50 max-lg:py-5 lg:p-5 w-full lg:w-[602px]">
+        <Text className="text-xl text-white font-main font-semibold text-center">
           Global
         </Text>
       </View>
-      <View className="bg-primary max-lg:w-full h-screen gap-4 mt-[3.8rem]">
-        <View className="overflow-y-auto">
-          <PostList
-            threads={
-              query.data?.sort(
-                (a, b) => b.track.indexed_ts - a.track.indexed_ts,
-              ) || []
-            }
-          />
-        </View>
+      <View className="bg-secondary max-lg:w-full h-screen gap-4 mt-[3.8rem] border border-bobo">
+        <PostList
+          threads={
+            query.data?.sort(
+              (a, b) => b.track.indexed_ts - a.track.indexed_ts,
+            ) || []
+          }
+        />
       </View>
     </View>
   );

@@ -17,9 +17,10 @@
 import { Link } from "expo-router";
 import { Text, View } from "react-native";
 import sanitize from "sanitize-html";
-import moment from "moment";
+import moment from "moment-timezone";
 import { Thread } from "@/lib/api";
 import TrackMeta from "./TrackMeta";
+import Octicons from "@expo/vector-icons/Octicons";
 
 export default function ThreadComp({ item }: { item: Thread }) {
   let actor = item.profile?.actor;
@@ -29,34 +30,37 @@ export default function ThreadComp({ item }: { item: Thread }) {
   const d = new Date();
   d.setTime(item.track.indexed_ts);
   if (Date.now() > day) {
-    date = moment.utc(d).fromNow();
+    date = moment.tz(d, Intl.DateTimeFormat().resolvedOptions().timeZone).fromNow(true);
   } else {
-    date = moment.utc(d).calendar();
+    date = moment.tz(d, Intl.DateTimeFormat().resolvedOptions().timeZone).calendar();
   }
   return (
     <View
       id={item.track.id}
-      className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 p-5 rounded-b-none bg-primary rounded-3xl"
+      className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 p-5 rounded-b-none bg-secondary lg:rounded-t-3xl"
     >
-      <View className="flex flex-row gap-1 pb-4 w-full">
-        <Link href={`/!${actor?.id}`}>
-          <Text className="text-white font-main font-semibold hover:underline">
-            {sanitize(actor?.display_name || actor?.id || "null")}
-          </Text>
-        </Link>
-        <Text className="text-white">•</Text>
-        <Link href={`/!${actor?.id}`}>
-          <Text className="text-white/70 font-main">
-            @{actor?.handle || actor?.id}
-          </Text>
-        </Link>
-        <Text className="text-white">•</Text>
-        <Text className="text-white">{date}</Text>
+      <View className="flex flex-row lg:justify-between gap-1 w-full pb-2">
+        <View className="flex flex-col gap-0.5">
+          <Link href={`/!${actor?.id}`}>
+            <Text className="text-white font-main font-semibold hover:underline">
+              {sanitize(actor?.display_name || actor?.id || "null")}
+            </Text>
+          </Link>
+          <Link href={`/!${actor?.id}`}>
+            <Text className="text-white/70 font-main">
+              @{actor?.handle || actor?.id}
+            </Text>
+          </Link>
+        </View>
       </View>
       <View>
-        <Text className="text-white font-main font-medium max-w-md md:max-w-xl lg:max-w-2xl text-wrap">
+        <Text className="text-white font-main font-medium max-w-md md:max-w-xl lg:max-w-2xl text-wrap pb-4">
           {sanitize(item.track.content)}
         </Text>
+      </View>
+      <View className="flex flex-row items-center gap-1 w-fit pl-2 pb-1">
+          <Octicons name="clock" size={14} className="text-graaaay" />
+          <Text className="text-graaaay lg:text-sm">{date}</Text>
       </View>
       <TrackMeta item={item} />
     </View>

@@ -115,13 +115,13 @@ export default function EditSelfModal() {
 
   return (
     <View className="flex-1 flex justify-center items-center bg-transparent backdrop-blur-sm backdrop-opacity-95 backdrop-brightness-50 scroll-smooth overflow-y-auto">
-      <View className="min-w-72 p-6 bg-primary/85 rounded-md gap-4">
+      <View className="min-w-72 p-6 bg-secondary/85 rounded-md gap-4">
         <Text className="text-white text-xl font-main font-bold">
           Edit Yourself
         </Text>
 
         <View className="gap-2 lg:gap-3 min-w-80 xl:min-w-96">
-          <Text className="text-primary dark:text-gray-300 text-lg font-main">
+          <Text className="text-secondary dark:text-gray-300 text-lg font-main">
             Display Name
           </Text>
           <Controller
@@ -130,7 +130,7 @@ export default function EditSelfModal() {
             rules={{ required: false }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                className="text-xl text-primary dark:text-white placeholder:italic p-2 rounded-lg border border-primary dark:border-white font-main"
+                className="text-xl text-secondary dark:text-white placeholder:italic p-2 rounded-lg border border-secondary dark:border-white font-main"
                 placeholder="Work Work"
                 onBlur={onBlur}
                 onChange={onChange}
@@ -142,7 +142,7 @@ export default function EditSelfModal() {
         </View>
 
         <View className="gap-2 lg:gap-3 min-w-80 xl:min-w-96">
-          <Text className="text-primary dark:text-gray-300 text-lg font-main">
+          <Text className="text-secondary dark:text-gray-300 text-lg font-main">
             Bio
           </Text>
           <Controller
@@ -151,7 +151,7 @@ export default function EditSelfModal() {
             rules={{ required: false }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                className="text-xl text-primary dark:text-white placeholder:italic p-2 rounded-lg border border-primary dark:border-white font-main"
+                className="text-xl text-secondary dark:text-white placeholder:italic p-2 rounded-lg border border-secondary dark:border-white font-main"
                 placeholder="I am people, because people is me."
                 onBlur={onBlur}
                 multiline={true}
@@ -164,7 +164,7 @@ export default function EditSelfModal() {
         </View>
 
         <View className="gap-2 lg:gap-3 min-w-80 xl:min-w-96">
-          <Text className="text-primary dark:text-gray-300 text-lg font-main">
+          <Text className="text-secondary dark:text-gray-300 text-lg font-main">
             Status
           </Text>
           <Controller
@@ -173,7 +173,7 @@ export default function EditSelfModal() {
             rules={{ required: false }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                className="text-xl text-primary dark:text-white placeholder:italic p-2 rounded-lg border border-primary dark:border-white font-main"
+                className="text-xl text-secondary dark:text-white placeholder:italic p-2 rounded-lg border border-secondary dark:border-white font-main"
                 placeholder="THE BRITISH ARE COMING!"
                 onBlur={onBlur}
                 onChange={onChange}
@@ -185,7 +185,7 @@ export default function EditSelfModal() {
         </View>
 
         <View className="gap-2 lg:gap-3 min-w-80 xl:min-w-96">
-          <Text className="text-primary dark:text-gray-300 text-lg font-main">
+          <Text className="text-secondary dark:text-gray-300 text-lg font-main">
             New Email
           </Text>
           <Controller
@@ -194,7 +194,7 @@ export default function EditSelfModal() {
             rules={{ required: false }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                className="text-xl text-primary dark:text-white placeholder:italic p-2 rounded-lg border border-primary dark:border-white font-main"
+                className="text-xl text-secondary dark:text-white placeholder:italic p-2 rounded-lg border border-secondary dark:border-white font-main"
                 placeholder="godsend@zeus.gods"
                 onBlur={onBlur}
                 onChange={onChange}
@@ -206,7 +206,7 @@ export default function EditSelfModal() {
         </View>
 
         <View className="gap-2 lg:gap-3 min-w-80 xl:min-w-96">
-          <Text className="text-primary dark:text-gray-300 text-lg font-main">
+          <Text className="text-secondary dark:text-gray-300 text-lg font-main">
             New Password
           </Text>
           <Controller
@@ -215,7 +215,7 @@ export default function EditSelfModal() {
             rules={{ required: false }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                className="text-xl text-primary dark:text-white placeholder:italic p-2 rounded-lg border border-primary dark:border-white font-main"
+                className="text-xl text-secondary dark:text-white placeholder:italic p-2 rounded-lg border border-secondary dark:border-white font-main"
                 placeholder="boombam"
                 onBlur={onBlur}
                 onChange={onChange}
@@ -229,7 +229,7 @@ export default function EditSelfModal() {
         </View>
 
         <View className="gap-2 lg:gap-3 min-w-80 xl:min-w-96">
-          <Text className="text-primary dark:text-gray-300 text-lg font-main">
+          <Text className="text-secondary dark:text-gray-300 text-lg font-main">
             Old Password
           </Text>
           <Controller
@@ -238,7 +238,7 @@ export default function EditSelfModal() {
             rules={{ required: false }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                className="text-xl text-primary dark:text-white placeholder:italic p-2 rounded-lg border border-primary dark:border-white font-main"
+                className="text-xl text-secondary dark:text-white placeholder:italic p-2 rounded-lg border border-secondary dark:border-white font-main"
                 placeholder="boombam"
                 onBlur={onBlur}
                 onChange={onChange}

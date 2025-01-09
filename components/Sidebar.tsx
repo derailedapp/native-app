@@ -24,22 +24,22 @@ import LogoHead from "./LogoHead";
 
 export default function Sidebar() {
   return (
-    <View className="bg-black lg:bg-none flex flex-row py-1.5 lg:pb-0 lg:flex-col scale-110 lg:scale-100 items-center lg:top-0 bottom-0 lg:justify-center justify-evenly z-50 fixed lg:left-0 w-full lg:w-[69px] gap-4 lg:ml-4 overflow-y-auto">
+    <View className="bg-primary max-lg:scale-110 lg:bg-none flex flex-row py-1.5 lg:pb-0 lg:flex-col items-center lg:top-0 bottom-0 lg:justify-center justify-evenly z-50 fixed lg:left-0 w-full lg:w-[69px] gap-4 lg:ml-4 overflow-y-auto">
       <LogoHead />
       <Link href="/">
-        <View className="flex flex-row justify-center p-4 gap-3 hover:bg-primary ease-in-out transition duration-500 rounded-xl">
+        <View className="flex flex-row justify-center p-4 gap-3 hover:bg-secondary ease-in-out transition duration-500 rounded-xl">
           <Octicons name="home" size={25} color="white" />
         </View>
       </Link>
       <Link href="/@me">
-        <View className="flex flex-row justify-center p-4 gap-3 hover:bg-primary ease-in-out transition duration-500 rounded-xl">
+        <View className="flex flex-row justify-center p-4 gap-3 hover:bg-secondary ease-in-out transition duration-500 rounded-xl">
           <Octicons name="feed-person" size={25} color="white" />
         </View>
       </Link>
       {tokenStorage.contains("token") && (
         <Link href="/post">
-          <View className="flex flex-row justify-center p-3 px-4 lg:p-4 gap-3 text-brand hover:bg-brand hover:text-white ease-in-out transition duration-500 rounded-full lg:rounded-xl">
-            <Octicons name="pencil" size={25} />
+          <View className="flex flex-row justify-center px-4 lg:p-4 gap-3 text-brand hover:text-brand-dark ease-in-out transition duration-500 rounded-full lg:rounded-xl">
+            <Octicons name="plus-circle" size={25} />
           </View>
         </Link>
       )}

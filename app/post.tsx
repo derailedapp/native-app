@@ -35,7 +35,7 @@ export default function PostModal() {
 
   return (
     <View className="flex-1 justify-center items-center bg-transparent backdrop-blur-sm backdrop-opacity-95 backdrop-brightness-50 scroll-smooth">
-      <View className="bg-primary/90 p-4 gap-10 rounded-md w-full lg:min-w-80">
+      <View className="bg-secondary/90 p-4 gap-10 rounded-md max-lg:w-full lg:min-w-80">
         <View className="flex flex-row justify-between">
           <Link href="../">
             <Text className="text-blue-400 font-main">Cancel</Text>

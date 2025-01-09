@@ -64,9 +64,9 @@ export default function UserProfile() {
 
   if (found) {
     return (
-      <View className="flex flex-row justify-center w-full h-screen m-auto bg-black overflow-y-auto overflow-x-hidden scroll-smooth">
+      <View className="flex flex-row justify-center w-full h-screen m-auto bg-primary overflow-y-auto overflow-x-hidden scroll-smooth">
         <Sidebar />
-        <View className="lg:mt-9 rounded-3xl w-full overflow-y-auto">
+        <View className="lg:mt-9 rounded-3xl max-lg:w-full">
           <ProfileDisplay
             profile={profileQuery.data}
             currentUser={
