@@ -19,6 +19,7 @@ import { Text, View } from "react-native";
 import sanitize from "sanitize-html";
 import moment from "moment";
 import { Thread } from "@/lib/api";
+import TrackMeta from "./TrackMeta";
 
 export default function ThreadComp({ item }: { item: Thread }) {
   let actor = item.profile?.actor;
@@ -57,6 +58,7 @@ export default function ThreadComp({ item }: { item: Thread }) {
           {sanitize(item.track.content)}
         </Text>
       </View>
+      <TrackMeta item={item} />
     </View>
   );
 }

@@ -18,10 +18,9 @@ import { useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import { getCurrentProfile, Profile, scrollGlobal, Thread } from "@/lib/api";
 import PostList from "@/components/PostList";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { tokenStorage, useCurrentProfileStore } from "@/lib/state";
 import { useQuery } from "@tanstack/react-query";
-import LogoHead from "@/components/LogoHead";
 
 export default function GlobalFeed() {
   const setCurrentProfile = useCurrentProfileStore((state) => state.setProfile);
@@ -45,12 +44,16 @@ export default function GlobalFeed() {
   return (
     <View
       className={
-        "flex flex-row relative justify-center min-w-full h-screen mx-auto overflow-y-auto bg-black scroll-smooth"
+        "flex flex-row relative justify-center w-full h-screen mx-auto overflow-y-auto bg-black scroll-smooth"
       }
     >
       <Sidebar />
-      <View className="bg-primary gap-4 rounded-t-3xl mt-9 pt-4">
-        <LogoHead />
+      <View className="fixed flex justify-center items-center bg-primary/50 backdrop-blur-xl underline decoration-brand backdrop-brightness-50 z-10 p-5 w-full lg:w-[602px]">
+        <Text className="text-xl text-white font-main font-semibold">
+          Global
+        </Text>
+      </View>
+      <View className="bg-primary max-lg:w-full h-screen gap-4 mt-[3.8rem]">
         <View className="overflow-y-auto">
           <PostList
             threads={

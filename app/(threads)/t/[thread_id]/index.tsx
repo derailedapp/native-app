@@ -59,7 +59,7 @@ export default function ThreadView() {
   return (
     <View
       className={
-        "flex flex-row justify-center min-w-full h-screen m-auto bg-black gap-4 overflow-y-auto scroll-smooth"
+        "flex flex-row justify-center w-full h-screen m-auto bg-black gap-4 overflow-y-auto scroll-smooth"
       }
     >
       <Sidebar />

@@ -27,7 +27,7 @@ export default function ProfileDisplay({
   currentUser: boolean;
 }) {
   return profile ? (
-    <View className="flex gap-4 p-5 bg-primary w-full rounded-3xl rounded-b-none">
+    <View className="flex gap-4 p-5 bg-primary w-full lg:rounded-3xl lg:rounded-b-none">
       <View className="flex flex-row items-center justify-between w-full">
         <View>
           <Text className="text-white font-main font-semibold text-lg">

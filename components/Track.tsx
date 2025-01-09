@@ -18,8 +18,8 @@ import { Link, useRouter } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 import sanitize from "sanitize-html";
 import moment from "moment";
-import { Profile, Thread } from "@/lib/api";
-import twMerge from "tw-merge";
+import { Thread } from "@/lib/api";
+import TrackMeta from "./TrackMeta";
 
 export default function TrackComp({ item }: { item: Thread }) {
   let actor = item.profile?.actor;
@@ -38,20 +38,21 @@ export default function TrackComp({ item }: { item: Thread }) {
     <Pressable onPress={() => router.push(`/t/${item.track.id}`)}>
       <View
         id={item.track.id}
-        className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 bg-primary p-5 rounded-t-none rounded-b-none rounded-xl border-t border-b-none border-borders"
+        className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 p-4 lg:p-6 px-4 bg-primary border-t border-b border-borders"
       >
         <View className="flex flex-row gap-1 pb-4 w-full">
-          <Link href={`/!${actor?.id}`}>
-            <Text className="text-white font-main font-semibold hover:underline">
-              {sanitize(actor?.display_name || actor?.id || "null")}
-            </Text>
-          </Link>
-          <Text className="text-white">•</Text>
-          <Link href={`/!${actor?.id}`}>
-            <Text className="text-white/70 font-main">
-              @{actor?.handle || actor?.id}
-            </Text>
-          </Link>
+          <View className="flex flex-col gap-0.5">
+            <Link href={`/!${actor?.id}`}>
+              <Text className="text-white font-main font-semibold hover:underline">
+                {sanitize(actor?.display_name || actor?.id || "null")}
+              </Text>
+            </Link>
+            <Link href={`/!${actor?.id}`}>
+              <Text className="text-white/70 font-main">
+                @{actor?.handle || actor?.id}
+              </Text>
+            </Link>
+          </View>
           <Text className="text-white">•</Text>
           <Text className="text-white">{date}</Text>
         </View>
@@ -60,6 +61,7 @@ export default function TrackComp({ item }: { item: Thread }) {
             {sanitize(item.track.content)}
           </Text>
         </View>
+        <TrackMeta item={item} />
       </View>
     </Pressable>
   );

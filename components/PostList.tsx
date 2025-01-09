@@ -22,17 +22,17 @@ import TrackComp from "./Track";
 export default function PostList({ threads }: { threads: Thread[] }) {
   // TODO: markdown formatting
   return (
-    <View className="w-[602px]">
+    <View className="w-full lg:w-[602px]">
       {threads.length > 0 && (
         <FlashList
           estimatedItemSize={150}
           data={threads}
-          className="flex flex-row rounded-b-3xl"
+          className="flex flex-row h-screen rounded-b-3xl"
           renderItem={({ item }) => <TrackComp item={item} />}
         />
       )}
       {threads.length == 0 && (
-        <View className="flex justify-start items-start h-full w-full p-4 rounded-xl rounded-t-none border-t border-borders bg-primary">
+        <View className="flex justify-start items-start h-full w-full p-4 rounded-xl rounded-t-none border-t border-borders">
           <Text className="text-white/70">
             Oh no! It seems empty here... You can be the first to reply!
           </Text>
