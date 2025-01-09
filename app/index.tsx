@@ -48,8 +48,8 @@ export default function GlobalFeed() {
       }
     >
       <Sidebar />
-      <View className="fixed flex justify-center items-center bg-primary/50 backdrop-blur-xl underline decoration-brand backdrop-brightness-50 z-10 p-5 w-full lg:w-[602px]">
-        <Text className="text-xl text-white font-main font-semibold">
+      <View className="fixed flex justify-center items-center bg-black/50 lg:bg-primary/50 backdrop-blur-xl underline decoration-brand overflow-y-auto backdrop-brightness-50 z-10 max-lg:py-5 lg:p-5 w-full lg:w-[602px]">
+        <Text className="text-xl text-white font-main font-semibold overflow-y-auto text-center">
           Global
         </Text>
       </View>

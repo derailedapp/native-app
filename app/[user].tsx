@@ -66,7 +66,7 @@ export default function UserProfile() {
     return (
       <View className="flex flex-row justify-center w-full h-screen m-auto bg-black overflow-y-auto overflow-x-hidden scroll-smooth">
         <Sidebar />
-        <View className="lg:mt-9 rounded-3xl">
+        <View className="lg:mt-9 rounded-3xl w-full overflow-y-auto">
           <ProfileDisplay
             profile={profileQuery.data}
             currentUser={
