@@ -6,7 +6,7 @@ import { bookmark, react, Thread, unbookmark, unreact } from "@/lib/api";
 import { useState } from "react";
 import { useRouter } from "expo-router";
 
-export default function TrackMeta({ item }: { item: Thread }) { 
+export default function TrackMeta({ item, setTamper, tamper }: { item: Thread, tamper: boolean, setTamper: (value: boolean) => void }) { 
     const [liked, setLiked] = useState(item.liked);
     const [bookmarked, setBookmarked] = useState(item.bookmarked);
 
@@ -61,8 +61,11 @@ export default function TrackMeta({ item }: { item: Thread }) {
                 <Text className="text-graaaay font-main font-medium">{bookmarks}</Text>
             </View>
             </Pressable>
+            <Pressable className="p-2 rounded-full hover:bg-tertiary" onPress={async () => setTamper(!tamper)}>
+                <Octicons name="kebab-horizontal" size={18} className="text-graaaay" />
+            </Pressable>
             <Pressable onPress={async () => await Clipboard.setStringAsync(item.track.content)}>
-            <Octicons name="copy" size={18} className="text-graaaay" />
+                <Octicons name="copy" size={18} className="text-graaaay" />
             </Pressable>
         </View>
     )

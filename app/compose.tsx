@@ -35,7 +35,7 @@ export default function PostModal() {
 
   return (
     <View className="flex-1 justify-center items-center bg-transparent backdrop-blur-sm backdrop-opacity-95 backdrop-brightness-50 scroll-smooth">
-      <View className="bg-secondary/90 p-4 gap-10 rounded-md max-lg:w-full lg:min-w-80">
+      <View className="bg-secondary p-4 gap-10 h-full rounded-md max-lg:w-full lg:min-w-96 xl:min-w-[34rem] xl:h-96">
         <View className="flex flex-row justify-between">
           <Link href="../">
             <Text className="text-blue-400 font-main">Cancel</Text>
@@ -46,13 +46,13 @@ export default function PostModal() {
             </View>
           </Pressable>
         </View>
-        <View className="flex flex-row items-center w-full lg:min-w-80">
+        <View className="flex flex-row items-center w-full h-full lg:min-w-80">
           <TextInput
             multiline
             onChangeText={(text) => setPostContent(text)}
             value={postContent}
             placeholder="So, have I some news for you..."
-            className="placeholder:text-gray-400 text-white font-main h-40 w-full lg:min-w-80 text-xl"
+            className="placeholder:text-gray-400 text-white font-main h-full w-full lg:min-w-80 text-xl"
           />
         </View>
       </View>

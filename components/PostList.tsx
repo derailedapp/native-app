@@ -27,7 +27,7 @@ export default function PostList({ threads }: { threads: Thread[] }) {
         <FlashList
           estimatedItemSize={150}
           data={threads}
-          className="flex flex-row w-full h-screen rounded-b-3xl"
+          className="flex flex-row w-full h-full rounded-b-3xl"
           renderItem={({ item }) => <TrackComp item={item} />}
         />
       )}

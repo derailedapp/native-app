@@ -81,7 +81,7 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen
-          name="post"
+          name="compose"
           options={{
             presentation: "transparentModal",
             animation: "fade",

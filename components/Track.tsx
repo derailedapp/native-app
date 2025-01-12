@@ -21,6 +21,8 @@ import moment from "moment";
 import { Thread } from "@/lib/api";
 import TrackMeta from "./TrackMeta";
 import Octicons from "@expo/vector-icons/Octicons";
+import { useState } from "react";
+import PostTamper from "./PostTamper";
 
 export default function TrackComp({ item }: { item: Thread }) {
   let actor = item.profile?.actor;
@@ -31,10 +33,12 @@ export default function TrackComp({ item }: { item: Thread }) {
   const d = new Date();
   d.setTime(item.track.indexed_ts);
   if (Date.now() > day) {
-    date = moment.tz(d, Intl.DateTimeFormat().resolvedOptions().timeZone).fromNow(true);
+    date = moment.tz(d, Intl.DateTimeFormat().resolvedOptions().timeZone).fromNow();
   } else {
     date = moment.tz(d, Intl.DateTimeFormat().resolvedOptions().timeZone).calendar();
   }
+
+  const [tamper, setTamper] = useState(false);
   return (
     <Pressable onPress={() => router.push(`/t/${item.track.id}`)}>
       <View
@@ -61,10 +65,13 @@ export default function TrackComp({ item }: { item: Thread }) {
           </Text>
         </View>
         <View className="flex flex-row items-center gap-1 w-fit pl-2 pb-1">
-          <Octicons name="clock" size={14} className="text-graaaay" />
+          <Octicons name="clock" size={13} className="text-graaaay" />
           <Text className="text-graaaay lg:text-sm">{date}</Text>
         </View>
-        <TrackMeta item={item} />
+        <TrackMeta item={item} tamper={tamper} setTamper={(value: boolean) => setTamper(value)} />
+        {tamper && (
+          <PostTamper item={item} setTamper={(value: boolean) => setTamper(value)} />
+        )}
       </View>
     </Pressable>
   );

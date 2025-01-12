@@ -31,22 +31,15 @@ export default function Sidebar() {
           <Octicons name="home" size={25} color="white" />
         </View>
       </Link>
-      <Link href="/@me">
+      <Link href={tokenStorage.contains("token") ? "/@me" : "/login"}>
         <View className="flex flex-row justify-center p-4 gap-3 hover:bg-secondary ease-in-out transition duration-500 rounded-xl">
-          <Octicons name="feed-person" size={25} color="white" />
+          <Octicons name={tokenStorage.contains("token") ? "feed-person" : "sign-in"} size={25} color="white" />
         </View>
       </Link>
       {tokenStorage.contains("token") && (
-        <Link href="/post">
-          <View className="flex flex-row justify-center px-4 lg:p-4 gap-3 text-brand hover:text-brand-dark ease-in-out transition duration-500 rounded-full lg:rounded-xl">
-            <Octicons name="plus-circle" size={25} />
-          </View>
-        </Link>
-      )}
-      {!tokenStorage.contains("token") && (
-        <Link href="/login">
-          <View className="flex flex-row justify-center px-4 lg:p-4 gap-3 text-brand sm:bg-none hover:bg-brand-dark ease-in-out transition duration-500 rounded-xl">
-            <Octicons name="sign-in" size={25} />
+        <Link href="/settings">
+          <View className="flex flex-row justify-center p-4 gap-3 hover:bg-secondary ease-in-out transition duration-500 rounded-xl">
+            <Octicons name="gear" size={25} color="white" />
           </View>
         </Link>
       )}

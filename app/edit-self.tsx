@@ -16,8 +16,9 @@
 
 import { getCurrentProfile, Profile, userEdit } from "@/lib/api";
 import { tokenStorage, useCurrentProfileStore } from "@/lib/state";
+import Octicons from "@expo/vector-icons/Octicons";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, Text, TextInput, View } from "react-native";
 
@@ -49,17 +50,14 @@ export default function EditSelfModal() {
   const mutate = useMutation({
     mutationKey: ["currentUser"],
     mutationFn: async (data: {
-      password: string | undefined;
-      email: string | undefined;
-      oldPassword: string | undefined;
       displayName: string | undefined;
       bio: string | undefined;
       status: string | undefined;
     }) => {
       return await userEdit(
-        replaceIfEmpty(data.email),
-        replaceIfEmpty(data.password),
-        replaceIfEmpty(data.oldPassword),
+        undefined,
+        undefined,
+        undefined,
         replaceIfEmpty(data.displayName),
         replaceIfEmpty(data.bio),
         replaceIfEmpty(data.status),
@@ -75,29 +73,10 @@ export default function EditSelfModal() {
     }
   };
   const onSubmit = async (data: {
-    password: string | undefined;
-    email: string | undefined;
-    oldPassword: string | undefined;
     displayName: string | undefined;
     bio: string | undefined;
     status: string | undefined;
   }) => {
-    if (data.password !== "" && data.oldPassword === "") {
-      return;
-    }
-    if (data.email !== "" && data.oldPassword === "") {
-      return;
-    }
-
-    if (data.oldPassword === "") {
-      data.oldPassword = undefined;
-    }
-    if (data.email === "") {
-      data.email = undefined;
-    }
-    if (data.password === "") {
-      data.password = undefined;
-    }
     if (data.bio === currentUserQuery.data?.actor.bio) {
       data.bio = undefined;
     }
@@ -114,13 +93,27 @@ export default function EditSelfModal() {
   };
 
   return (
-    <View className="flex-1 flex justify-center items-center bg-transparent backdrop-blur-sm backdrop-opacity-95 backdrop-brightness-50 scroll-smooth overflow-y-auto">
-      <View className="min-w-72 p-6 bg-secondary/85 rounded-md gap-4">
-        <Text className="text-white text-xl font-main font-bold">
-          Edit Yourself
-        </Text>
+    <View className="flex-1 flex max-lg:w-screen justify-center items-center bg-transparent backdrop-blur-sm backdrop-opacity-95 backdrop-brightness-50 scroll-smooth overflow-y-auto">
+      <View className="md:min-w-96 lg:min-w-[35rem] max-lg:w-full p-8 bg-secondary rounded-2xl gap-8">
+        <View className="flex flex-row w-full items-center justify-between mb-4">
+          <View className="flex flex-row items-center gap-3 lg:gap-7">
+            <Link href="..">
+              <Octicons name="x" size={22} className="text-white/75" />
+            </Link>
+            <Text className="text-white text-xl font-main font-bold">
+              Edit profile
+            </Text>
+          </View>
+          <Pressable
+          className="bg-brand rounded-full px-3 py-1"
+          onPress={handleSubmit(onSubmit)}>
+            <Text className="text-white text-center text-lg font-main">
+              Save
+            </Text>
+          </Pressable>
+        </View>
 
-        <View className="gap-2 lg:gap-3 min-w-80 xl:min-w-96">
+        <View className="gap-3 lg:gap-3 w-full md:min-w-80 xl:min-w-96">
           <Text className="text-secondary dark:text-gray-300 text-lg font-main">
             Display Name
           </Text>
@@ -141,7 +134,7 @@ export default function EditSelfModal() {
           ></Controller>
         </View>
 
-        <View className="gap-2 lg:gap-3 min-w-80 xl:min-w-96">
+        <View className="gap-3 lg:gap-3 w-full md:min-w-80 xl:min-w-96">
           <Text className="text-secondary dark:text-gray-300 text-lg font-main">
             Bio
           </Text>
@@ -163,7 +156,7 @@ export default function EditSelfModal() {
           ></Controller>
         </View>
 
-        <View className="gap-2 lg:gap-3 min-w-80 xl:min-w-96">
+        <View className="gap-3 lg:gap-3 w-full md:min-w-80 xl:min-w-96">
           <Text className="text-secondary dark:text-gray-300 text-lg font-main">
             Status
           </Text>
@@ -183,82 +176,6 @@ export default function EditSelfModal() {
             name="status"
           ></Controller>
         </View>
-
-        <View className="gap-2 lg:gap-3 min-w-80 xl:min-w-96">
-          <Text className="text-secondary dark:text-gray-300 text-lg font-main">
-            New Email
-          </Text>
-          <Controller
-            // @ts-ignore
-            control={control}
-            rules={{ required: false }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                className="text-xl text-secondary dark:text-white placeholder:italic p-2 rounded-lg border border-secondary dark:border-white font-main"
-                placeholder="godsend@zeus.gods"
-                onBlur={onBlur}
-                onChange={onChange}
-                value={value}
-              />
-            )}
-            name="email"
-          ></Controller>
-        </View>
-
-        <View className="gap-2 lg:gap-3 min-w-80 xl:min-w-96">
-          <Text className="text-secondary dark:text-gray-300 text-lg font-main">
-            New Password
-          </Text>
-          <Controller
-            // @ts-ignore
-            control={control}
-            rules={{ required: false }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                className="text-xl text-secondary dark:text-white placeholder:italic p-2 rounded-lg border border-secondary dark:border-white font-main"
-                placeholder="boombam"
-                onBlur={onBlur}
-                onChange={onChange}
-                value={value}
-                secureTextEntry={true}
-                textContentType="newPassword"
-              />
-            )}
-            name="password"
-          ></Controller>
-        </View>
-
-        <View className="gap-2 lg:gap-3 min-w-80 xl:min-w-96">
-          <Text className="text-secondary dark:text-gray-300 text-lg font-main">
-            Old Password
-          </Text>
-          <Controller
-            // @ts-ignore
-            control={control}
-            rules={{ required: false }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                className="text-xl text-secondary dark:text-white placeholder:italic p-2 rounded-lg border border-secondary dark:border-white font-main"
-                placeholder="boombam"
-                onBlur={onBlur}
-                onChange={onChange}
-                value={value}
-                secureTextEntry={true}
-                textContentType="password"
-              />
-            )}
-            name="oldPassword"
-          ></Controller>
-        </View>
-
-        <Pressable
-          className="bg-brand w-full rounded-lg p-2"
-          onPress={handleSubmit(onSubmit)}
-        >
-          <Text className="text-white text-center text-lg font-main">
-            Edit my Account
-          </Text>
-        </Pressable>
       </View>
     </View>
   );
