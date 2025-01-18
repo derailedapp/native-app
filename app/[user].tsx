@@ -64,8 +64,8 @@ export default function UserProfile() {
 
   if (found) {
     return (
-      <View className="flex flex-row justify-center w-full h-screen m-auto bg-primary overflow-y-auto overflow-x-hidden scroll-smooth">
-        <Sidebar />
+      <View className="flex flex-row justify-center w-full h-screen mb-20 max-lg:no-scrollbar bg-white dark:bg-primary overflow-y-auto overflow-x-hidden scroll-smooth">
+        <Sidebar curPage={user} />
         <View className="lg:mt-9 rounded-3xl max-lg:w-full">
           <ProfileDisplay
             profile={profileQuery.data}
@@ -79,6 +79,7 @@ export default function UserProfile() {
                 (a, b) => b.track.indexed_ts - a.track.indexed_ts,
               ) || []
             }
+            loading={query.isLoading}
           />
         </View>
       </View>

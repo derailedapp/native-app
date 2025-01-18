@@ -29,8 +29,8 @@ const queryClient = new QueryClient();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
-    MonaSans: require("../assets/fonts/MonaSans-Variable.ttf"),
-    MonaSansItalic: require("../assets/fonts/MonaSans-Italic-Variable.ttf"),
+    Satoshi: require("../assets/fonts/Satoshi-Variable.ttf"),
+    SatoshiItalic: require("../assets/fonts/Satoshi-VariableItalic.ttf"),
     MonaspaceNeon: require("../assets/fonts/MonaspaceNeon-Variable.ttf"),
   });
   useFonts({

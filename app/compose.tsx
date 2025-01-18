@@ -35,15 +35,15 @@ export default function PostModal() {
 
   return (
     <View className="flex-1 justify-center items-center bg-transparent backdrop-blur-sm backdrop-opacity-95 backdrop-brightness-50 scroll-smooth">
-      <View className="bg-secondary p-4 gap-10 h-full rounded-md max-lg:w-full lg:min-w-96 xl:min-w-[34rem] xl:h-96">
-        <View className="flex flex-row justify-between">
+      <View className="bg-white dark:bg-secondary p-4 gap-10 h-full rounded-md max-lg:w-full lg:min-w-96 xl:min-w-[34rem] xl:h-96">
+        <View className="flex flex-row items-center justify-between">
           <Link href="../">
-            <Text className="text-blue-400 font-main">Cancel</Text>
+            <Text className="text-brand font-main font-medium">Cancel</Text>
           </Link>
           <Pressable onPress={post}>
-            <View className="p-3 rounded-md">
-              <Text className="text-brand font-main">Post</Text>
-            </View>
+            <Text className="text-white bg-brand px-5 py-1 rounded-full font-main font-medium">
+              Post
+            </Text>
           </Pressable>
         </View>
         <View className="flex flex-row items-center w-full h-full lg:min-w-80">
@@ -52,7 +52,7 @@ export default function PostModal() {
             onChangeText={(text) => setPostContent(text)}
             value={postContent}
             placeholder="So, have I some news for you..."
-            className="placeholder:text-gray-400 text-white font-main h-full w-full lg:min-w-80 text-xl"
+            className="placeholder:text-gray-400 text-black dark:text-white font-main h-full w-full lg:min-w-80 text-xl"
           />
         </View>
       </View>

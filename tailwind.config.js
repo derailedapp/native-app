@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        main: ["MonaSans", "AppleColorEmoji"],
+        main: ["Satoshi", "SatoshiItalic", "AppleColorEmoji"],
         code: ["MonaspaceNeon", "AppleColorEmoji"],
       },
       colors: {
@@ -20,8 +20,9 @@ module.exports = {
         "tender-surrender": "rgba(252,194,156,255)",
         leet: "rgb(101, 108, 118)",
         graaaay: "rgb(142, 142, 147)",
+        "dark-graaaay": "rgb(99, 99, 102)",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")({ nocompatible: true })],
 };

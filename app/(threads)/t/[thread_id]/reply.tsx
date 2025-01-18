@@ -41,25 +41,27 @@ export default function ReplyModal() {
 
   return (
     <View className="flex-1 justify-center items-center bg-transparent backdrop-blur-sm backdrop-opacity-95 backdrop-brightness-50">
-      <View className="bg-secondary/85 p-4 gap-10 rounded-md w-full lg:w-[33rem] h-3/6">
+      <View className="bg-white dark:bg-secondary p-4 gap-10 rounded-md w-full lg:w-fit h-fit">
         <View className="flex flex-row items-center justify-between">
           <Link href="../">
-            <Text className="text-blue-400 font-main">Cancel</Text>
+            <Text className="text-brand font-main">Cancel</Text>
           </Link>
           <Pressable onPress={reply}>
-            <View className="p-3 rounded-md">
-              <Text className="text-brand font-main">Reply</Text>
+            <View className="rounded-full bg-brand px-5 py-1">
+              <Text className="text-white font-main">Reply</Text>
             </View>
           </Pressable>
         </View>
         <View className="flex flex-col min-w-96 gap-10">
-          {currentTrack && <ThreadComp item={currentTrack} />}
+          <View className="border border-brand">
+            {currentTrack && <ThreadComp item={currentTrack} />}
+          </View>
           <TextInput
             multiline
             onChangeText={(text) => setPostContent(text)}
             value={postContent}
             placeholder="So, have I some news for you..."
-            className="placeholder:text-gray-400 text-white font-main h-40 min-w-96 text-xl"
+            className="placeholder:text-graaaay text-black dark:text-white font-main h-40 min-w-96 text-xl"
           />
         </View>
       </View>

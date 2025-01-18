@@ -14,15 +14,14 @@
    limitations under the License.
 */
 
-import { Link } from "expo-router";
-import { Text, View } from "react-native";
+import { Link, useRouter } from "expo-router";
+import { Pressable, Text, View } from "react-native";
 import sanitize from "sanitize-html";
 import moment from "moment-timezone";
 import { Thread } from "@/lib/api";
 import TrackMeta from "./TrackMeta";
 import Octicons from "@expo/vector-icons/Octicons";
-import { useState } from "react";
-import PostTamper from "./PostTamper";
+import { Image } from "expo-image";
 
 export default function ThreadComp({ item }: { item: Thread }) {
   let actor = item.profile?.actor;
@@ -32,44 +31,56 @@ export default function ThreadComp({ item }: { item: Thread }) {
   const d = new Date();
   d.setTime(item.track.indexed_ts);
   if (Date.now() > day) {
-    date = moment.tz(d, Intl.DateTimeFormat().resolvedOptions().timeZone).fromNow();
+    date = moment
+      .tz(d, Intl.DateTimeFormat().resolvedOptions().timeZone)
+      .fromNow();
   } else {
-    date = moment.tz(d, Intl.DateTimeFormat().resolvedOptions().timeZone).calendar();
+    date = moment
+      .tz(d, Intl.DateTimeFormat().resolvedOptions().timeZone)
+      .calendar();
   }
 
-  const [tamper, setTamper] = useState(false);
+  const router = useRouter();
+
   return (
     <View
       id={item.track.id}
-      className="flex flex-col justify-start items-start w-full transition ease-in-out duration-500 p-5 rounded-b-none bg-secondary lg:rounded-t-3xl"
+      className="flex flex-col justify-start items-start w-full border border-brand dark:border-none transition ease-in-out duration-500 p-5 rounded-b-none bg-white dark:bg-secondary lg:rounded-3xl"
     >
-      <View className="flex flex-row lg:justify-between gap-1 w-full pb-2">
-        <View className="flex flex-col gap-0.5">
-          <Link href={`/!${actor?.id}`}>
-            <Text className="text-white font-main font-semibold hover:underline">
-              {sanitize(actor?.display_name || actor?.id || "null")}
+      <View className="flex flex-row w-full gap-2">
+        <Pressable onPress={() => router.push(`/!${actor?.id}`)}>
+          <Image
+            className="h-10 w-10 rounded-full"
+            source={`${process.env.EXPO_PUBLIC_API_URL}/users/${item.profile!.actor.id}/avatar`}
+          />
+        </Pressable>
+        <View className="w-full">
+          <View className="flex flex-row lg:justify-between gap-1 w-full pb-2">
+            <View className="flex flex-col gap-0.5">
+              <Link href={`/!${actor?.id}`}>
+                <Text className="text-black dark:text-white/70 font-main font-bold hover:underline">
+                  {sanitize(actor?.display_name || actor?.id || "null")}
+                </Text>
+              </Link>
+              <Link href={`/!${actor?.id}`}>
+                <Text className="text-black dark:text-white/70 font-medium font-main">
+                  {(actor?.handle && `@${actor.handle}`) || `!${actor?.id}`}
+                </Text>
+              </Link>
+            </View>
+          </View>
+          <View>
+            <Text className="text-black dark:text-white font-main font-medium max-w-md md:max-w-xl lg:max-w-2xl text-wrap pb-4">
+              {sanitize(item.track.content)}
             </Text>
-          </Link>
-          <Link href={`/!${actor?.id}`}>
-            <Text className="text-white/70 font-main">
-              @{actor?.handle || actor?.id}
-            </Text>
-          </Link>
+          </View>
+          <View className="flex flex-row items-center gap-1 w-fit pb-1">
+            <Octicons name="clock" size={13} className="text-graaaay" />
+            <Text className="text-graaaay lg:text-sm font-normal">{date}</Text>
+          </View>
+          <TrackMeta item={item} />
         </View>
       </View>
-      <View>
-        <Text className="text-white font-main font-medium max-w-md md:max-w-xl lg:max-w-2xl text-wrap pb-4">
-          {sanitize(item.track.content)}
-        </Text>
-      </View>
-      <View className="flex flex-row items-center gap-1 w-fit pl-2 pb-1">
-          <Octicons name="clock" size={13} className="text-graaaay" />
-          <Text className="text-graaaay lg:text-sm">{date}</Text>
-      </View>
-      <TrackMeta item={item} tamper={tamper} setTamper={(value) => setTamper(value)} />
-      {tamper && (
-        <PostTamper item={item} setTamper={(value: boolean) => setTamper(value)} />
-      )}
     </View>
   );
 }

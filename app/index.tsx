@@ -45,25 +45,18 @@ export default function GlobalFeed() {
   return (
     <View
       className={
-        "flex flex-row relative justify-center w-full mx-auto overflow-y-auto bg-primary scroll-smooth"
+        "flex flex-row justify-center h-screen w-full m-auto bg-white dark:bg-primary max-lg:no-scrollbar overflow-y-auto scroll-smooth scrollbar-thumb-rounded-3xl scrollbar-corner-rounded-3xl scrollbar-track-rounded-3xl"
       }
     >
-      <View className="bg-secondary max-lg:w-full h-full gap-4 mt-[3.8rem] border border-bobo pb-5">
-        <PostList
-          threads={
-            query.data?.sort(
-              (a, b) => b.track.indexed_ts - a.track.indexed_ts,
-            ) || []
-          }
-        />
-      </View>
-      <View className="fixed border border-bobo max-lg:scale-110 flex top-0 justify-center items-center bg-primary lg:bg-primary/65 lg:backdrop-blur-lg underline decoration-brand overflow-y-auto backdrop-brightness-50 z-50 max-lg:py-5 lg:p-5 w-full lg:w-[602px]">
-        <Text className="text-xl text-white font-main font-semibold text-center">
-          Global
-        </Text>
-      </View>
+      <PostList
+        threads={
+          query.data?.sort((a, b) => b.track.indexed_ts - a.track.indexed_ts) ||
+          []
+        }
+        loading={query.isLoading}
+      />
       <PostCreate />
-      <Sidebar />
+      <Sidebar curPage="home" />
     </View>
   );
 }

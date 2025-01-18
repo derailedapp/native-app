@@ -100,13 +100,14 @@ export default function EditSelfModal() {
             <Link href="..">
               <Octicons name="x" size={22} className="text-white/75" />
             </Link>
-            <Text className="text-white text-xl font-main font-bold">
+            <Text className="text-white text-lg font-main font-bold">
               Edit profile
             </Text>
           </View>
           <Pressable
-          className="bg-brand rounded-full px-3 py-1"
-          onPress={handleSubmit(onSubmit)}>
+            className="bg-brand rounded-full px-5 py-1"
+            onPress={handleSubmit(onSubmit)}
+          >
             <Text className="text-white text-center text-lg font-main">
               Save
             </Text>

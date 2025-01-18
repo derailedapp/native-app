@@ -22,14 +22,14 @@ export const authHeaders = (otherHeaders: object = {}): HeadersInit => {
       ...otherHeaders,
       "Content-Type": "application/json",
       Authorization: tokenStorage.getString("token")!,
-    }
+    };
   } else {
     return {
       ...otherHeaders,
       "Content-Type": "application/json",
-    }
+    };
   }
-}
+};
 
 export const createUser = async (email: string, password: string) => {
   const resp = await fetch(process.env.EXPO_PUBLIC_API_URL + "/create", {
@@ -105,7 +105,7 @@ export const scrollGlobal = async (
 
   const resp = await fetch(url, {
     method: "GET",
-    headers: authHeaders()
+    headers: authHeaders(),
   });
 
   return await resp.json();
@@ -198,7 +198,9 @@ export const getThread = async (post_id: string): Promise<Thread> => {
 };
 
 export const bookmark = async (post_id: string) => {
-  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/tracks/" + post_id + "/bookmark");
+  const url = new URL(
+    process.env.EXPO_PUBLIC_API_URL + "/tracks/" + post_id + "/bookmark",
+  );
   const resp = await fetch(url, {
     method: "POST",
     mode: "cors",
@@ -207,7 +209,9 @@ export const bookmark = async (post_id: string) => {
 };
 
 export const unbookmark = async (post_id: string) => {
-  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/tracks/" + post_id + "/bookmark");
+  const url = new URL(
+    process.env.EXPO_PUBLIC_API_URL + "/tracks/" + post_id + "/bookmark",
+  );
   const resp = await fetch(url, {
     method: "DELETE",
     mode: "cors",
@@ -216,7 +220,9 @@ export const unbookmark = async (post_id: string) => {
 };
 
 export const react = async (post_id: string) => {
-  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/tracks/" + post_id + "/react");
+  const url = new URL(
+    process.env.EXPO_PUBLIC_API_URL + "/tracks/" + post_id + "/react",
+  );
   const resp = await fetch(url, {
     method: "POST",
     mode: "cors",
@@ -225,7 +231,9 @@ export const react = async (post_id: string) => {
 };
 
 export const unreact = async (post_id: string) => {
-  const url = new URL(process.env.EXPO_PUBLIC_API_URL + "/tracks/" + post_id + "/react");
+  const url = new URL(
+    process.env.EXPO_PUBLIC_API_URL + "/tracks/" + post_id + "/react",
+  );
   const resp = await fetch(url, {
     method: "DELETE",
     mode: "cors",

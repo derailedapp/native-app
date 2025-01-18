@@ -27,12 +27,12 @@ import {
   useCurrentTrackStore,
 } from "@/lib/state";
 import { useQuery } from "@tanstack/react-query";
+import { Image } from "expo-image";
 
 export default function ThreadView() {
   const localParams = useLocalSearchParams();
   const thread_id = localParams.thread_id as string;
 
-  const setCurrentProfile = useCurrentProfileStore((state) => state.setProfile);
   const setCurrentTrack = useCurrentTrackStore((state) => state.setTrack);
 
   const currentTrack = useCurrentTrackStore((state) => state.currentTrack);
@@ -46,28 +46,25 @@ export default function ThreadView() {
     },
   });
 
-  useEffect(() => {
-    if (tokenStorage.contains("token")) {
-      getCurrentProfile()
-        .then((profile) => {
-          setCurrentProfile(profile);
-        })
-        .catch(() => tokenStorage.delete("token"));
-    }
-  }, []);
-
   return (
     <View
       className={
-        "flex flex-row justify-center w-full h-full m-auto bg-primary gap-4 overflow-y-auto scroll-smooth"
+        "flex flex-row justify-center w-full h-full m-auto bg-white dark:bg-primary gap-4 overflow-y-auto scroll-smooth"
       }
     >
-      <Sidebar />
-      <View className="lg:pt-9 max-lg:w-full">
+      <Sidebar curPage={undefined} />
+      <View className="lg:mt-9 max-lg:w-full h-fit">
         {currentTrack && <ThreadComp item={currentTrack} />}
+        {}
         <Link href={`/t/${thread_id}/reply`}>
-          <View className="w-full flex justify-start items-start border-t border-borders p-3 rounded-xl rounded-t-none rounded-b-none bg-secondary">
-            <Text className="text-white/70 font-main">Write your reply...</Text>
+          <View className="w-full flex flex-row justify-start items-center gap-3 lg:mt-3 pl-5 p-3 lg:rounded-full bg-brand">
+            <Image
+              className="h-10 w-10 rounded-full"
+              source={`${process.env.EXPO_PUBLIC_API_URL}/users/${currentTrack?.profile!.actor.id}/avatar`}
+            />
+            <Text className="text-white font-main font-semibold">
+              Write your reply...
+            </Text>
           </View>
         </Link>
         <PostList
@@ -76,6 +73,7 @@ export default function ThreadView() {
               (a, b) => a.track.indexed_ts - b.track.indexed_ts,
             ) || []
           }
+          loading={query.isLoading}
         />
       </View>
     </View>

@@ -16,26 +16,31 @@
 
 import { Thread } from "@/lib/api";
 import { FlashList } from "@shopify/flash-list";
-import { Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 import TrackComp from "./Track";
 
-export default function PostList({ threads }: { threads: Thread[] }) {
+export default function PostList({ threads, loading }: { threads: Thread[], loading: boolean }) {
   // TODO: markdown formatting
   return (
-    <View className="w-full lg:w-[602px]">
+    <View className="w-full lg:w-[602px] mb-20 lg:mb-5 lg:mt-5 z-[1] no-scrollbar">
       {threads.length > 0 && (
         <FlashList
           estimatedItemSize={150}
           data={threads}
-          className="flex flex-row w-full h-full rounded-b-3xl"
+          className="flex flex-row w-full h-full no-scrollbar lg:rounded-t-3xl rounded-b-3xl scrollbar-thin scrollbar-thumb-rounded-3xl scrollbar-corner-rounded-3xl scrollbar-track-rounded-3xl"
           renderItem={({ item }) => <TrackComp item={item} />}
         />
       )}
-      {threads.length == 0 && (
-        <View className="flex justify-start items-start h-full w-full p-4 rounded-xl rounded-t-none border-t border-borders">
-          <Text className="text-white/70">
+      {(threads.length === 0 && loading === false) && (
+        <View className="flex justify-start items-start h-screen w-full p-4 rounded-xl rounded-t-none border-t border-borders">
+          <Text className="text-graaaay dark:text-white/70 font-semibold">
             Oh no! It seems empty here... You can be the first to reply!
           </Text>
+        </View>
+      )}
+      {(threads.length === 0 && loading === true) && (
+        <View className="flex justify-center items-center h-screen w-full p-4 rounded-xl rounded-t-none border-t border-borders">
+          <ActivityIndicator size="large" className="text-brand" />
         </View>
       )}
     </View>

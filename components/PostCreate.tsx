@@ -19,14 +19,20 @@ import Octicons from "@expo/vector-icons/Octicons";
 import { useRouter } from "expo-router";
 
 export default function PostCreate() {
-    let router = useRouter();
-    return (
-        <View className="flex fixed mb-[5.5rem] lg:mb-9 items-center justify-center bottom-0 h-14 w-14 lg:mr-[692px] max-lg:ml-4 max-lg:left-0 z-20">
-            <Pressable onPress={() => router.push("/compose")} className="h-full w-full">
-                <View className="flex items-center justify-center bg-brand rounded-full h-full w-full">
-                        <Octicons name="pencil" size={25} color="white" />
-                </View>
-            </Pressable>
+  let router = useRouter();
+  return (
+    <View className="flex fixed items-center justify-center max-lg:mb-28 bottom-0 h-8 w-fit max-lg:ml-4 max-lg:left-0 z-30 lg:top-5 lg:right-6">
+      <Pressable
+        onPress={() => router.push("/compose")}
+        className="h-full w-full"
+      >
+        <View className="flex flex-row items-center gap-2 justify-center rounded-full bg-brand h-full w-full max-lg:p-6 lg:px-4">
+          <Octicons name="pencil" size={20} className="text-white" />
+          <Text className="max-lg:hidden text-white font-main font-bold">
+            Post
+          </Text>
         </View>
-    )
+      </Pressable>
+    </View>
+  );
 }

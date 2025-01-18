@@ -18,10 +18,14 @@ import { Image, Pressable, View } from "react-native";
 
 export default function LogoHead() {
   return (
-    <View className="max-md:hidden lg:flex justify-center items-center lg:pb-4">
+    <View className="max-md:hidden lg:pb-2">
       <Image
-        className="max-h-[20.8px] max-w-[24px] lg:max-h-[33.7px] lg:max-w-[38.9px]"
+        className="max-h-[20.8px] max-w-[24px] lg:max-h-[33.7px] lg:max-w-[38.9px] lg:hidden"
         source={require("../assets/images/blub_icon_brand_RGB.svg")}
+      />
+      <Image
+        className="hidden lg:block h-fit max-w-[128px] max-h-[24px]"
+        source={require("../assets/images/blub_logo_brand_RGB.svg")}
       />
     </View>
   );
