@@ -19,7 +19,13 @@ import { FlashList } from "@shopify/flash-list";
 import { ActivityIndicator, Text, View } from "react-native";
 import TrackComp from "./Track";
 
-export default function PostList({ threads, loading }: { threads: Thread[], loading: boolean }) {
+export default function PostList({
+  threads,
+  loading,
+}: {
+  threads: Thread[];
+  loading: boolean;
+}) {
   // TODO: markdown formatting
   return (
     <View className="w-full lg:w-[602px] mb-20 lg:mb-5 lg:mt-5 z-[1] no-scrollbar">
@@ -31,14 +37,14 @@ export default function PostList({ threads, loading }: { threads: Thread[], load
           renderItem={({ item }) => <TrackComp item={item} />}
         />
       )}
-      {(threads.length === 0 && loading === false) && (
+      {threads.length === 0 && loading === false && (
         <View className="flex justify-start items-start h-screen w-full p-4 rounded-xl rounded-t-none border-t border-borders">
           <Text className="text-graaaay dark:text-white/70 font-semibold">
             Oh no! It seems empty here... You can be the first to reply!
           </Text>
         </View>
       )}
-      {(threads.length === 0 && loading === true) && (
+      {threads.length === 0 && loading === true && (
         <View className="flex justify-center items-center h-screen w-full p-4 rounded-xl rounded-t-none border-t border-borders">
           <ActivityIndicator size="large" className="text-brand" />
         </View>

@@ -14,8 +14,8 @@
    limitations under the License.
 */
 
-import { getCurrentProfile, Profile, userEdit } from "@/lib/api";
-import { tokenStorage, useCurrentProfileStore } from "@/lib/state";
+import { getCurrentProfile, userEdit } from "@/lib/api";
+import { tokenStorage } from "@/lib/state";
 import Octicons from "@expo/vector-icons/Octicons";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Link, useRouter } from "expo-router";

@@ -16,9 +16,9 @@
 
 import { useEffect } from "react";
 import Sidebar from "../components/Sidebar";
-import { getCurrentProfile, Profile, scrollGlobal, Thread } from "@/lib/api";
+import { getCurrentProfile, scrollGlobal } from "@/lib/api";
 import PostList from "@/components/PostList";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { tokenStorage, useCurrentProfileStore } from "@/lib/state";
 import { useQuery } from "@tanstack/react-query";
 import PostCreate from "@/components/PostCreate";

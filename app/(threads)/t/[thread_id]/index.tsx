@@ -14,18 +14,13 @@
    limitations under the License.
 */
 
-import { useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
-import { getCurrentProfile, getThread, Profile, Thread } from "@/lib/api";
+import { getThread } from "@/lib/api";
 import PostList from "@/components/PostList";
 import { Text, View } from "react-native";
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import ThreadComp from "@/components/ThreadDisplay";
-import {
-  tokenStorage,
-  useCurrentProfileStore,
-  useCurrentTrackStore,
-} from "@/lib/state";
+import { useCurrentTrackStore } from "@/lib/state";
 import { useQuery } from "@tanstack/react-query";
 import { Image } from "expo-image";
 
@@ -49,7 +44,7 @@ export default function ThreadView() {
   return (
     <View
       className={
-        "flex flex-row justify-center w-full h-full m-auto bg-white dark:bg-primary gap-4 overflow-y-auto scroll-smooth"
+        "flex flex-row justify-center w-full h-full m-auto bg-white no-scrollbar dark:bg-primary gap-4 overflow-y-auto scroll-smooth"
       }
     >
       <Sidebar curPage={undefined} />

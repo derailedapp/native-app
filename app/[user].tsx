@@ -14,14 +14,9 @@
    limitations under the License.
 */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Sidebar from "../components/Sidebar";
-import {
-  getCurrentProfile,
-  getProfile,
-  getUserTracks,
-  Profile,
-} from "@/lib/api";
+import { getCurrentProfile, getProfile, getUserTracks } from "@/lib/api";
 import PostList from "@/components/PostList";
 import { View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -29,6 +24,7 @@ import NotFoundScreen from "./+not-found";
 import ProfileDisplay from "@/components/ProfileDisplay";
 import { tokenStorage } from "@/lib/state";
 import { useQuery } from "@tanstack/react-query";
+import PostCreate from "@/components/PostCreate";
 
 // TODO: support handles
 export default function UserProfile() {
@@ -64,9 +60,8 @@ export default function UserProfile() {
 
   if (found) {
     return (
-      <View className="flex flex-row justify-center w-full h-screen mb-20 max-lg:no-scrollbar bg-white dark:bg-primary overflow-y-auto overflow-x-hidden scroll-smooth">
-        <Sidebar curPage={user} />
-        <View className="lg:mt-9 rounded-3xl max-lg:w-full">
+      <View className="flex flex-row justify-center w-full h-screen mb-20 no-scrollbar bg-white dark:bg-primary overflow-y-auto overflow-x-hidden scroll-smooth">
+        <View className="flex lg:mt-9 rounded-3xl max-lg:w-full">
           <ProfileDisplay
             profile={profileQuery.data}
             currentUser={
@@ -82,6 +77,8 @@ export default function UserProfile() {
             loading={query.isLoading}
           />
         </View>
+        <PostCreate />
+        <Sidebar curPage={user} />
       </View>
     );
   } else {

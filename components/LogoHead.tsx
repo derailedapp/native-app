@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-import { Image, Pressable, View } from "react-native";
+import { Image, View } from "react-native";
 
 export default function LogoHead() {
   return (
